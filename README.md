@@ -5,9 +5,10 @@ Making your terminal look like it's doing something important.
 ## Download v1.13
 
 - **[Download for Windows (ZIP)](https://github.com/lordtempis/technobabble/releases/download/v1.13/Technobabble-1.13.zip)**
+- **[Download for Linux (portable x86-64 binary, .tar.gz)](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble-1.13.0-linux-x64.tar.gz)** · [Portable checksum](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble-1.13.0-linux-x64.tar.gz.sha256)
 - **[Download for Ubuntu under WSL 2 (.deb, amd64)](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-1_amd64.deb)**
 - [Download the Linux source archive (.tar.gz)](https://github.com/lordtempis/technobabble/releases/download/v1.13/Technobabble-Linux-1.13.0-source.tar.gz)
-- [Download the SHA-256 checksums](https://github.com/lordtempis/technobabble/releases/download/v1.13/v1.13-SHA256SUMS)
+- [SHA-256 checksums for the Windows ZIP, Ubuntu package, and Linux source](https://github.com/lordtempis/technobabble/releases/download/v1.13/v1.13-SHA256SUMS)
 
 ## Quick install
 
@@ -20,6 +21,19 @@ Download the Windows ZIP above and choose **Extract All**. In the extracted fold
 ```
 
 Both executables use Windows performance counters. They were tested on Windows 11 with .NET Framework 4.8.
+
+### Linux (portable)
+
+Use the portable archive on Intel/AMD 64-bit Linux with glibc 2.27 or later, ICU, and OpenSSL. It bundles .NET and runs directly from your user directory. Download the portable binary and its checksum above, then run these commands in the download directory.
+
+```sh
+sha256sum -c technobabble-1.13.0-linux-x64.tar.gz.sha256
+tar -xzf technobabble-1.13.0-linux-x64.tar.gz
+cd technobabble-1.13.0-linux-x64
+./technobabble --layout "Relay Watch"
+```
+
+Use `./technobabble` for Classic Mode. Keep the extracted folder together. Alpine (musl) and ARM machines require a different build.
 
 ### Ubuntu under WSL 2
 
