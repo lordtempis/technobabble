@@ -5,8 +5,8 @@ Making your terminal look like it's doing something important.
 ## Download v1.13
 
 - **[Download for Windows (ZIP)](https://github.com/lordtempis/technobabble/releases/download/v1.13/Technobabble-1.13.zip)**
+- **[Install with APT on Debian or Ubuntu](#debian-and-ubuntu-apt)** · [Download the amd64 .deb](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb) · [Package checksum](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb.sha256)
 - **[Download for Linux (portable x86-64 binary, .tar.gz)](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble-1.13.0-linux-x64.tar.gz)** · [Portable checksum](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble-1.13.0-linux-x64.tar.gz.sha256)
-- **[Download for Ubuntu under WSL 2 (.deb, amd64)](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-1_amd64.deb)**
 - [Download the Linux source archive (.tar.gz)](https://github.com/lordtempis/technobabble/releases/download/v1.13/Technobabble-Linux-1.13.0-source.tar.gz)
 - [SHA-256 checksums for the Windows ZIP, Ubuntu package, and Linux source](https://github.com/lordtempis/technobabble/releases/download/v1.13/v1.13-SHA256SUMS)
 
@@ -22,6 +22,25 @@ Download the Windows ZIP above and choose **Extract All**. In the extracted fold
 
 Both executables use Windows performance counters. They were tested on Windows 11 with .NET Framework 4.8.
 
+### Debian and Ubuntu (APT)
+
+On 64-bit Intel/AMD Debian or Ubuntu, including Ubuntu under WSL, add the Technobabble repository once. The package includes .NET. These commands use `curl` to download the public signing key and the APT source definition.
+
+```sh
+sudo install -d -m 0755 /etc/apt/keyrings
+sudo curl -fsSL https://raw.githubusercontent.com/lordtempis/technobabble/main/linux/apt/technobabble.asc -o /etc/apt/keyrings/technobabble.asc
+sudo curl -fsSL https://raw.githubusercontent.com/lordtempis/technobabble/main/linux/apt/technobabble.sources -o /etc/apt/sources.list.d/technobabble.sources
+sudo chmod 0644 /etc/apt/keyrings/technobabble.asc /etc/apt/sources.list.d/technobabble.sources
+sudo apt update
+sudo apt install technobabble
+```
+
+Run `technobabble` for Classic or `technobabble --layout "Relay Watch"` for Studio. Get later published versions with `sudo apt update` followed by `sudo apt upgrade`. Remove the app with `sudo apt remove technobabble`.
+
+For a one-time install, download the `.deb` above and run `sudo apt install ./technobabble_1.13.0-2_amd64.deb` in the download directory. Revision 2 upgrades the original Ubuntu package in place.
+
+The archive key fingerprint is `A533 F774 E961 CCB6 FDA0 0A90 B588 F42F 73E5 1C2D`. The source definition limits this key to the Technobabble repository.
+
 ### Linux (portable)
 
 Use the portable archive on Intel/AMD 64-bit Linux with glibc 2.27 or later, ICU, and OpenSSL. It bundles .NET and runs directly from your user directory. Download the portable binary and its checksum above, then run these commands in the download directory.
@@ -34,19 +53,6 @@ cd technobabble-1.13.0-linux-x64
 ```
 
 Use `./technobabble` for Classic Mode. Keep the extracted folder together. Alpine (musl) and ARM machines require a different build.
-
-### Ubuntu under WSL 2
-
-The Ubuntu package runs natively on x86-64 (`amd64`) and reads Linux system data. In your **Ubuntu terminal**, run the commands below. On Ubuntu 26.04, the tested version, APT installs the required .NET 10 runtime along with Technobabble.
-
-```sh
-curl -fLO https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-1_amd64.deb
-sudo apt update
-sudo apt install ./technobabble_1.13.0-1_amd64.deb
-technobabble --layout "Relay Watch"
-```
-
-If APT on an older Ubuntu release cannot find `dotnet-runtime-10.0`, follow the [.NET setup instructions for your Ubuntu version](https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu-install), then rerun the package install command.
 
 ## Classic and Studio modes
 
