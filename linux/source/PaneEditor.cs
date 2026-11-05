@@ -23,7 +23,7 @@ namespace Technobabble {
         static readonly string[] descriptions={
             "Display passwords","System process overview","Source with line numbers","Network overview",
             "Matrix rain","Scrolling source code","Error messages","Large text banners","File bytes",
-            "CPU and memory overview","ASCII pictures","Linux system log","Manual pages","World map",
+            "CPU and memory overview","ASCII pictures",Machine.PlatformName+" system log","Manual pages","World map",
             "Soundwave animation","Simulated file transfers","Network graphs","SSH key art","File details",
             "Directory tree","Disk activity","GPU activity and memory","Interactive Process Watch",
             "Sensor sweep and contacts","Carrier tuning and decoded messages","Engineering repairs and telemetry"

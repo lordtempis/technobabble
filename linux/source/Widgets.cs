@@ -50,7 +50,7 @@ namespace Technobabble {
         static readonly string[][] Manuals={
             new[]{"TECHNOBABBLE(1)","NAME","    technobabble - split a screen into terminal widgets","SYNOPSIS","    technobabble [-s count] [-d seconds]","DESCRIPTION","    Randomly split the display into panes.","    Each pane runs its own visual program.","    The bottom-right pane survives each shuffle.","OPTIONS","    -s, --splits    maximum pane count","    -d, --delay     seconds between arrangements","SEE ALSO","    cmatrix, htop, figlet, ssh-keygen"},
             new[]{"HEXDUMP(1)","NAME","    hexdump - display bytes in hexadecimal","SYNOPSIS","    hexdump -C file","DESCRIPTION","    Show the byte offset, sixteen hex bytes","    and their printable character equivalents.","    A dot represents a nonprinting byte.","OUTPUT","    00000000  4d 5a 90 00  MZ..","SEE ALSO","    od, xxd, stat"},
-            new[]{"TREE(1)","NAME","    tree - display a directory hierarchy","SYNOPSIS","    tree [directory]","DESCRIPTION","    Print the root directory followed by its","    descendants. Branches indicate nesting.","    The Linux display samples system directories.","FILES","    /etc","    /usr/share","SEE ALSO","    stat, find, ls"},
+            new[]{"TREE(1)","NAME","    tree - display a directory hierarchy","SYNOPSIS","    tree [directory]","DESCRIPTION","    Print the root directory followed by its","    descendants. Branches indicate nesting.","    The "+Machine.PlatformName+" display samples system directories.","FILES","    /etc","    /usr/share","SEE ALSO","    stat, find, ls"},
             new[]{"PV(1)","NAME","    pv - monitor a data stream","SYNOPSIS","    pv [options]","DESCRIPTION","    Report the amount transferred, elapsed time,","    transfer rate and estimated time remaining.","OPTIONS","    -p   draw a progress bar","    -r   show the transfer rate","    -s   set the expected size","SEE ALSO","    dd, cat, time"}
         };
         int Hash(int a,int b) {
@@ -200,7 +200,7 @@ namespace Technobabble {
         }
         void Logs(Grid g,int t){
             string[] lines=host.Latest.Logs;
-            if(lines.Length==0){g.Put(0,0,"technobabble: waiting for readable Linux logs",Ink.Yellow);return;}
+            if(lines.Length==0){g.Put(0,0,"technobabble: waiting for readable "+Machine.PlatformName+" logs",Ink.Yellow);return;}
             for(int y=0;y<g.H;y++){
                 string s=lines[(y+t*3)%lines.Length];
                 g.Put(0,y,s,Ink.White);g.Put(0,y,s.Substring(0,Math.Min(15,s.Length)),Ink.Green);

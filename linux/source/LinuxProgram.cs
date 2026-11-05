@@ -8,7 +8,7 @@ namespace Technobabble {
     internal static partial class LinuxProgram {
         static readonly string Version = typeof(LinuxProgram).Assembly.GetName().Version.ToString(3);
         static readonly string Usage = $"""
-            Technobabble for Linux {Version}
+            Technobabble for {Machine.PlatformName} {Version}
             technobabble [-s 1..20] [-d seconds] [--classic | --studio] [--layout NAME] [--refresh 1|2|5]
 
             Start in Classic, or try: technobabble --layout "Relay Watch"
@@ -23,10 +23,10 @@ namespace Technobabble {
             try {
                 var options = Options.Parse(args);
                 if (options.Help) { Console.WriteLine(Usage); return 0; }
-                if (options.Version) { Console.WriteLine($"Technobabble {Version} (Linux)"); return 0; }
-                if (!OperatingSystem.IsLinux()) { Console.Error.WriteLine("This edition runs on Linux."); return 2; }
+                if (options.Version) { Console.WriteLine($"Technobabble {Version} ({Machine.PlatformName})"); return 0; }
+                if (!Machine.Supported) { Console.Error.WriteLine($"This edition runs on {Machine.PlatformName}."); return 2; }
                 if (Console.IsInputRedirected || Console.IsOutputRedirected) {
-                    Console.Error.WriteLine("Open a Linux terminal to run Technobabble interactively."); return 2;
+                    Console.Error.WriteLine($"Open a {Machine.PlatformName} terminal to run Technobabble interactively."); return 2;
                 }
                 using var machine = new Machine();
                 var scene = new Scene(options.Count, options.Delay, new Random(), machine, new Pictures());

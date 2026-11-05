@@ -5,7 +5,7 @@ from pathlib import Path
 import pyte
 
 class Session:
-    def __init__(self, app, data, args, width=120, height=40):
+    def __init__(self, app, data, args, width=120, height=40, layout_dir=None):
         self.master,self.slave=pty.openpty()
         self.original=termios.tcgetattr(self.slave)
         self.screen=pyte.Screen(width,height)
@@ -18,6 +18,7 @@ class Session:
             if self.slave>2:os.close(self.slave)
             env=dict(os.environ,TERM='xterm-256color',PATH='/usr/bin:/bin',XDG_DATA_HOME=data)
             for key in ('TECHNOBABBLE_LAYOUT_DIR','HOLLYWOOD_LAYOUT_DIR','WSL_INTEROP','WSLENV'):env.pop(key,None)
+            if layout_dir is not None:env['TECHNOBABBLE_LAYOUT_DIR']=str(layout_dir)
             os.execve(app,[app]+args,env)
         self.take(.7)
     def resize(self,w,h):

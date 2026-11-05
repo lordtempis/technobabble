@@ -22,12 +22,6 @@ namespace Technobabble {
             catch(UnauthorizedAccessException) { return Array.Empty<string>(); }
         }
         internal static long Number(string value) => long.TryParse(value,out long n) ? n : 0;
-        internal static double[] Append(double[] values, double sample, int limit=120) {
-            int keep=Math.Min(values.Length,limit-1);
-            var result=new double[keep+1];
-            Array.Copy(values,values.Length-keep,result,0,keep); result[keep]=sample;
-            return result;
-        }
 
         public void Sample(Snapshot sample) {
             var next=new Dictionary<string,CpuTicks>();

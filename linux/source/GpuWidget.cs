@@ -18,10 +18,10 @@ namespace Technobabble {
             }
         }
         internal static void Gpu(Grid g,GpuSnapshot s,int tick){
-            g.Band(0,"GPU ACTIVITY / Linux",Ink.Black,Ink.Purple);
+            g.Band(0,"GPU ACTIVITY / "+Machine.PlatformName,Ink.Black,Ink.Purple);
             if(s.Rows.Length==0){
                 g.Put(0,1,s.Status,Ink.Gold);
-                g.Put(0,3,"No readable DRM or NVIDIA metrics.",Ink.Gray);
+                g.Put(0,3,Machine.GpuHint,Ink.Gray);
                 return;
             }
             int index=(tick/10)%s.Rows.Length;
@@ -43,7 +43,7 @@ namespace Technobabble {
                     for(int row=0;row<filled;row++)g.Set(margin+x,y+h-1-row,' ',Ink.Pink,Ink.Purple);
                 }
             }
-            if(g.H>8)g.Put(0,g.H-1,gpu.Usage.HasValue?"Live Linux GPU | refresh "+s.RefreshSeconds+"s":s.Status,Ink.Gray);
+            if(g.H>8)g.Put(0,g.H-1,gpu.Usage.HasValue?"Live "+Machine.PlatformName+" GPU | refresh "+s.RefreshSeconds+"s":s.Status,Ink.Gray);
         }
     }
 }

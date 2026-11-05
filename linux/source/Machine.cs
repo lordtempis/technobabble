@@ -5,14 +5,12 @@ using System.Linq;
 using System.Threading;
 
 namespace Technobabble {
-    internal sealed class Machine : IDisposable {
+    internal sealed partial class Machine : IDisposable {
         readonly Thread worker;
         readonly ManualResetEvent stop=new(false);
         readonly AutoResetEvent wake=new(false);
         readonly Stopwatch clock=Stopwatch.StartNew();
-        readonly LinuxProc proc=new();
         readonly NetworkSampler network=new();
-        readonly LinuxDevices devices=new();
         long diskDemand,gpuDemand;
         int refresh=2;
         public volatile bool StudioActive;
@@ -29,10 +27,9 @@ namespace Technobabble {
             }
         }
         public Machine() {
-            Files=new[]{"/usr/bin/ls","/usr/bin/bash","/usr/bin/env","/usr/bin/cat","/usr/bin/uname",
-                "/etc/os-release","/etc/services"}.Where(File.Exists).Select(p=>new FileInfo(p)).ToArray();
-            Trees=new[]{"/etc","/usr/share","/usr/lib","/sys/class","/proc/sys"}.Select(Tree).ToArray();
-            worker=new Thread(Poll){IsBackground=true,Name="Technobabble Linux sampler"};
+            Files=FilePaths.Where(File.Exists).Select(p=>new FileInfo(p)).ToArray();
+            Trees=TreePaths.Select(Tree).ToArray();
+            worker=new Thread(Poll){IsBackground=true,Name="Technobabble "+PlatformName+" sampler"};
             worker.Start();
         }
         static string[] Tree(string dir) {
@@ -53,8 +50,8 @@ namespace Technobabble {
         public void RequestDisks()=>Demand(ref diskDemand);
         public void RequestGpus()=>Demand(ref gpuDemand);
 
-        static string[] Logs() {
-            foreach(string path in new[]{"/var/log/syslog","/var/log/messages"}) {
+        static string[] FileLogs(params string[] paths) {
+            foreach(string path in paths) {
                 try {
                     using var stream=new FileStream(path,FileMode.Open,FileAccess.Read,FileShare.ReadWrite|FileShare.Delete);
                     long start=Math.Max(0,stream.Length-65536);
@@ -65,8 +62,7 @@ namespace Technobabble {
                     if(lines.Length>0)return lines;
                 } catch(IOException){}catch(UnauthorizedAccessException){}
             }
-            return LinuxDevices.Run("/usr/bin/journalctl","--system","--no-pager","-q","-n","48","-o","short")
-                .Split('\n',StringSplitOptions.RemoveEmptyEntries);
+            return Array.Empty<string>();
         }
         void Poll() {
             var waits=new WaitHandle[]{stop,wake};
@@ -75,12 +71,12 @@ namespace Technobabble {
                 var sample=new Snapshot{RefreshSeconds=RefreshSeconds};
                 double now=clock.Elapsed.TotalSeconds;
                 proc.Sample(sample);
-                network.Sample(sample,LinuxProc.Interfaces(),StudioActive?Network:NetworkChoice.Automatic,now-last);
+                network.Sample(sample,Interfaces(),StudioActive?Network:NetworkChoice.Automatic,now-last);
                 var old=Latest;
                 if(sample.NetworkReady) {
                     bool same=sample.NicId==old.NicId && sample.RefreshSeconds==old.RefreshSeconds;
-                    sample.RxHistory=LinuxProc.Append(same?old.RxHistory:Array.Empty<double>(),sample.Rx);
-                    sample.TxHistory=LinuxProc.Append(same?old.TxHistory:Array.Empty<double>(),sample.Tx);
+                    sample.RxHistory=Snapshot.Append(same?old.RxHistory:Array.Empty<double>(),sample.Rx);
+                    sample.TxHistory=Snapshot.Append(same?old.TxHistory:Array.Empty<double>(),sample.Tx);
                 }
                 if(now>=nextLogs){sample.Logs=Logs();nextLogs=now+30;}else sample.Logs=old.Logs;
                 if(Recent(ref diskDemand))sample.Disks=devices.Disks(now,sample.RefreshSeconds);else devices.ResetDisks();

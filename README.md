@@ -4,6 +4,8 @@ Making your terminal look like it's doing something important.
 
 Technobabble turns your terminal into an animated wall of diagnostics. Classic Mode reshuffles the panes. In Studio Mode, choose and save your own mix of live system monitors and fictional instruments.
 
+This branch adds a [macOS terminal preview for Apple Silicon and Intel](macos/README.md). Its unsigned installers are preview build artifacts.
+
 <a name="download-v113"></a>
 
 ## Download v1.13.1

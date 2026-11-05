@@ -4,6 +4,12 @@ namespace Technobabble {
         public int Id; public string Name; public long Memory,Started; public double Cpu;
     }
     internal sealed class Snapshot {
+        internal static double[] Append(double[] values, double sample, int limit=120) {
+            int keep=Math.Min(values.Length,limit-1);
+            var result=new double[keep+1];
+            Array.Copy(values,values.Length-keep,result,0,keep); result[keep]=sample;
+            return result;
+        }
         public DateTime Time=DateTime.Now;
         public ProcessRow[] Processes=new ProcessRow[0];
         public string[] Logs=new string[0];

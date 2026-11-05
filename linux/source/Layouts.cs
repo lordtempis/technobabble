@@ -149,6 +149,9 @@ namespace Technobabble {
         public static LayoutStore ForUser(){
             string path = Environment.GetEnvironmentVariable("TECHNOBABBLE_LAYOUT_DIR");
             if (!String.IsNullOrWhiteSpace(path)) return new LayoutStore(path);
+            if (OperatingSystem.IsMacOS())
+                return new LayoutStore(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                    "Library", "Application Support", "Technobabble", "layouts"));
             string data = Environment.GetEnvironmentVariable("XDG_DATA_HOME");
             if (String.IsNullOrEmpty(data) || !Path.IsPathRooted(data))
                 data=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),".local","share");

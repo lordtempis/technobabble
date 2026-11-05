@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>technobabble</AssemblyName>
+    <RootNamespace>Technobabble</RootNamespace>
+    <Version>1.13.1</Version>
+    <Product>Technobabble for macOS</Product>
+    <DebugType>none</DebugType>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../linux/source/*.cs" Exclude="../linux/source/AssemblyInfo.cs;../linux/source/LinuxProc.cs;../linux/source/LinuxDevices.cs;../linux/source/LinuxMachine.cs" />
+    <Compile Include="source/*.cs" />
+    <EmbeddedResource Include="@(Compile);../linux/source/assets/*.gz;../linux/source/assets/*.flf">
+      <LogicalName>%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Target Name="BuildMacSensors" AfterTargets="Build" Condition="$([MSBuild]::IsOSPlatform('OSX'))">
+    <PropertyGroup>
+      <MacArch Condition="'$(RuntimeIdentifier)' == 'osx-arm64'">-arch arm64</MacArch>
+      <MacArch Condition="'$(RuntimeIdentifier)' == 'osx-x64'">-arch x86_64</MacArch>
+    </PropertyGroup>
+    <Exec Command="/usr/bin/clang $(MacArch) -mmacosx-version-min=15.0 -std=c11 -Wall -Wextra -Werror -O2 -dynamiclib -install_name @rpath/libtechnobabble-sensors.dylib -framework IOKit -framework CoreFoundation &quot;$(MSBuildProjectDirectory)/native/metrics.c&quot; -o &quot;$(TargetDir)libtechnobabble-sensors.dylib&quot;" />
+  </Target>
+  <Target Name="PublishMacSensors" AfterTargets="Publish" Condition="$([MSBuild]::IsOSPlatform('OSX'))">
+    <Copy SourceFiles="$(TargetDir)libtechnobabble-sensors.dylib" DestinationFolder="$(PublishDir)" />
+  </Target>
+</Project>

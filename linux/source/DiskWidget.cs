@@ -5,7 +5,7 @@ namespace Technobabble {
     internal sealed partial class Widget {
         static string Rate(double? value){return value.HasValue?Size(value.Value)+"/s":"sampling";}
         internal static void Disk(Grid g,DiskSnapshot s,int tick){
-            g.Band(0,"DISK ACTIVITY / Linux block devices",Ink.Black,Ink.Cyan);
+            g.Band(0,"DISK ACTIVITY / "+Machine.DiskLabel,Ink.Black,Ink.Cyan);
             if(s.Rows.Length==0){
                 g.Put(0,1,s.Status,Ink.Gold);
                 if(g.H>3)g.Put(0,3,"Reads = green    Writes = cyan",Ink.Gray);

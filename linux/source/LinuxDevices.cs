@@ -38,8 +38,8 @@ namespace Technobabble {
             if(rows.Count==0)result.Status="No Linux block device counters exposed";
             else if(rows.All(r=>r.Read.HasValue)) {
                 bool same=refresh==disk.RefreshSeconds && result.Rows.Select(r=>r.Name).SequenceEqual(disk.Rows.Select(r=>r.Name));
-                result.ReadHistory=LinuxProc.Append(same?disk.ReadHistory:Array.Empty<double>(),rows.Sum(r=>r.Read.Value));
-                result.WriteHistory=LinuxProc.Append(same?disk.WriteHistory:Array.Empty<double>(),rows.Sum(r=>r.Write.Value));
+                result.ReadHistory=Snapshot.Append(same?disk.ReadHistory:Array.Empty<double>(),rows.Sum(r=>r.Read.Value));
+                result.WriteHistory=Snapshot.Append(same?disk.WriteHistory:Array.Empty<double>(),rows.Sum(r=>r.Write.Value));
                 result.Status="Linux block devices | refresh "+refresh+"s";
             } else result.Status="Collecting block device baselines";
             diskTime=now; diskBaseline=next; disk=result;
@@ -79,7 +79,7 @@ namespace Technobabble {
             foreach(var row in rows) {
                 if(row.Usage>100)row.Usage=null;
                 var old=gpu.Rows.FirstOrDefault(r=>r.Id==row.Id);
-                if(row.Usage.HasValue)row.History=LinuxProc.Append(old!=null && refresh==gpu.RefreshSeconds?old.History:Array.Empty<double>(),row.Usage.Value);
+                if(row.Usage.HasValue)row.History=Snapshot.Append(old!=null && refresh==gpu.RefreshSeconds?old.History:Array.Empty<double>(),row.Usage.Value);
             }
             gpu=new GpuSnapshot{Rows=rows.ToArray(),RefreshSeconds=refresh,Status=rows.Count==0?"GPU metrics unavailable in Linux":"Linux GPU / refresh "+refresh+"s"};
             return gpu;

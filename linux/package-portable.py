@@ -3,7 +3,6 @@
 import argparse
 import gzip
 import hashlib
-import json
 from pathlib import Path
 import shutil
 import subprocess
@@ -11,26 +10,12 @@ import tarfile
 import tempfile
 import xml.etree.ElementTree as ET
 
+from runtime_notices import copy_runtime_notices
+
 
 ROOT = Path(__file__).resolve().parent
 PROJECT = ROOT / "Technobabble.csproj"
 RID = "linux-x64"
-
-
-def copy_runtime_notices(app, obj, dest):
-    options = json.loads((app / "technobabble.runtimeconfig.json").read_text())["runtimeOptions"]
-    version = next(f["version"] for f in options["includedFrameworks"] if f["name"] == "Microsoft.NETCore.App")
-    assets = json.loads((obj / "project.assets.json").read_text())
-    pack = "Microsoft.NETCore.App.Runtime." + RID
-    candidates = [Path(path) / pack.lower() / version for path in assets["packageFolders"]]
-    candidates.append(Path(shutil.which("dotnet")).resolve().parent / "packs" / pack / version)
-    for directory in candidates:
-        if all((directory / name).is_file() for name in ("LICENSE.TXT", "THIRD-PARTY-NOTICES.TXT")):
-            dest.mkdir()
-            for name in ("LICENSE.TXT", "THIRD-PARTY-NOTICES.TXT"):
-                shutil.copyfile(directory / name, dest / name)
-            return
-    raise RuntimeError(f"Missing redistribution notices for {pack} {version}")
 
 
 def archive_metadata(entry):
@@ -61,7 +46,7 @@ def build(out):
         for doc in ("README.md", "LICENSE.txt", "NOTICE.txt"):
             shutil.copyfile(ROOT / doc, bundle / doc)
         shutil.copyfile(ROOT / "source/assets/standard.flf", bundle / "standard.flf")
-        copy_runtime_notices(app, obj, bundle / "dotnet-notices")
+        copy_runtime_notices(app, obj, bundle / "dotnet-notices", RID)
 
         archive = Path(output_tmp) / (name + ".tar.gz")
         with archive.open("wb") as stream, gzip.GzipFile(filename="", fileobj=stream, mode="wb", mtime=0) as gz:
