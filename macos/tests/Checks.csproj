@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>Technobabble.Mac.Tests</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Technobabble.csproj" />
+    <Compile Include="../../linux/tests/StudioChecks.cs;../../linux/tests/PaneEditorChecks.cs;../../linux/tests/CodeScrollChecks.cs;../../linux/tests/RelayChecks.cs" />
+  </ItemGroup>
+</Project>

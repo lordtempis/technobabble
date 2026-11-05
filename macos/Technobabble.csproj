@@ -10,6 +10,7 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
   <ItemGroup>
+    <InternalsVisibleTo Include="Technobabble.Mac.Tests" />
     <Compile Include="../linux/source/*.cs" Exclude="../linux/source/AssemblyInfo.cs;../linux/source/LinuxProc.cs;../linux/source/LinuxDevices.cs;../linux/source/LinuxMachine.cs" />
     <Compile Include="source/*.cs" />
     <EmbeddedResource Include="@(Compile);../linux/source/assets/*.gz;../linux/source/assets/*.flf">

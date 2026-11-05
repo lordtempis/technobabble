@@ -4,7 +4,7 @@ This terminal edition shares Classic animations, the Studio pane editor, saved l
 
 ## Install and launch
 
-Use macOS 15 or later. Choose the `osx-arm64` installer for an Apple Silicon Mac, or `osx-x64` for an Intel Mac. Both packages include .NET. The preview packages are unsigned and have not been notarized by Apple.
+The installer targets macOS 15 or later. The [compatibility workflow](https://github.com/lordtempis/technobabble/actions/workflows/macos-compatibility.yml) tests on macOS Tahoe 26. Choose the `osx-arm64` installer for an Apple silicon Mac or `osx-x64` for an Intel Mac. Both packages include .NET. The preview packages are unsigned and have not been notarized by Apple.
 
 1. Place the `.pkg` and its matching `.sha256` file in one directory. Run `shasum -a 256 -c <filename>.pkg.sha256`.
 2. Open the installer to install the command-line program system-wide. Installation requires administrator authorization.

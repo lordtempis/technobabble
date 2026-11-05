@@ -31,6 +31,7 @@ with tempfile.TemporaryDirectory() as tmp:
     layouts = Path(tmp)/"layouts"
     @contextmanager
     def launch(*args):
+        print("Launching:", app, *args, flush=True)
         with Session(app,tmp,list(args),layout_dir=layouts) as s:
             # First launch loads the bundled runtime and assets. Wait for a real
             # status line instead of assuming every host paints in 700 ms.
@@ -55,7 +56,9 @@ with tempfile.TemporaryDirectory() as tmp:
         s.key(b"w"); s.key(b"Mac Preview\r")
         assert (layouts/"Mac Preview.layout").read_text().splitlines()[2] == "V *radar H *signal *engineering"
     with launch("--layout","Mac Preview") as s:
-        s.key(b"e"); assert "PANE EDITOR" in s.body; s.key(b"\x1b")
+        s.key(b"e"); assert "PANE EDITOR" in s.body
+        s.key(b"r\x1b[F\r"); assert "engineering" in s.screen.display[0], s.screen.display
+        s.key(b"u"); assert "radar" in s.screen.display[0], s.screen.display
     with launch("--layout","Process Watch","--refresh","1") as s:
         s.key(b"f"); s.key(b"technobabble\r",2.0)
         assert "Filter: technobabble" in s.body and str(s.pid) in s.body, s.screen.display
