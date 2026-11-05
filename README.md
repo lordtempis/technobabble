@@ -4,13 +4,41 @@ Making your terminal look like it's doing something important.
 
 ## Download v1.13
 
+- **[Download for Debian or Ubuntu (64-bit)](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb)** · [Install the .deb](#debian-and-ubuntu-deb) · [Package checksum](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb.sha256)
 - **[Download for Windows (ZIP)](https://github.com/lordtempis/technobabble/releases/download/v1.13/Technobabble-1.13.zip)**
-- **[Download for Debian or Ubuntu (64-bit)](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb)** · [Install with APT](#debian-and-ubuntu-apt) · [Package checksum](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb.sha256)
 - **[Download for Linux (portable x86-64 binary, .tar.gz)](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble-1.13.0-linux-x64.tar.gz)** · [Portable checksum](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble-1.13.0-linux-x64.tar.gz.sha256)
 - [Download the Linux source archive (.tar.gz)](https://github.com/lordtempis/technobabble/releases/download/v1.13/Technobabble-Linux-1.13.0-source.tar.gz)
 - [Original v1.13 checksums for the Windows ZIP and Linux source](https://github.com/lordtempis/technobabble/releases/download/v1.13/v1.13-SHA256SUMS)
 
 ## Quick install
+
+### Debian and Ubuntu (.deb)
+
+On 64-bit Intel/AMD Debian or Ubuntu, including Ubuntu under WSL, [download the .deb](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb). Open a terminal in the folder where you saved it and run:
+
+```sh
+sudo apt install ./technobabble_1.13.0-2_amd64.deb
+```
+
+The package includes .NET. Run `technobabble` for Classic or `technobabble --layout "Relay Watch"` for Studio. To uninstall, run `sudo apt remove technobabble`.
+
+<a name="debian-and-ubuntu-apt"></a>
+
+#### Optional APT repository for updates
+
+If you want future Technobabble releases through `apt upgrade`, add the signed repository once. You can do this any time after installing the `.deb`.
+
+```sh
+sudo install -d -m 0755 /etc/apt/keyrings
+sudo curl -fsSL https://raw.githubusercontent.com/lordtempis/technobabble/main/linux/apt/technobabble.asc -o /etc/apt/keyrings/technobabble.asc
+sudo curl -fsSL https://raw.githubusercontent.com/lordtempis/technobabble/main/linux/apt/technobabble.sources -o /etc/apt/sources.list.d/technobabble.sources
+sudo chmod 0644 /etc/apt/keyrings/technobabble.asc /etc/apt/sources.list.d/technobabble.sources
+sudo apt update
+```
+
+For future updates, run `sudo apt update` followed by `sudo apt upgrade`. If you skipped the `.deb` download, you can now install by name with `sudo apt install technobabble`.
+
+The archive key fingerprint is `A533 F774 E961 CCB6 FDA0 0A90 B588 F42F 73E5 1C2D`. The source definition limits this key to the Technobabble repository.
 
 ### Windows
 
@@ -21,25 +49,6 @@ Download the Windows ZIP above and choose **Extract All**. In the extracted fold
 ```
 
 Both executables use Windows performance counters. They were tested on Windows 11 with .NET Framework 4.8.
-
-### Debian and Ubuntu (APT)
-
-On 64-bit Intel/AMD Debian or Ubuntu, including Ubuntu under WSL, add the Technobabble repository once. The package includes .NET. These commands use `curl` to download the public signing key and the APT source definition.
-
-```sh
-sudo install -d -m 0755 /etc/apt/keyrings
-sudo curl -fsSL https://raw.githubusercontent.com/lordtempis/technobabble/main/linux/apt/technobabble.asc -o /etc/apt/keyrings/technobabble.asc
-sudo curl -fsSL https://raw.githubusercontent.com/lordtempis/technobabble/main/linux/apt/technobabble.sources -o /etc/apt/sources.list.d/technobabble.sources
-sudo chmod 0644 /etc/apt/keyrings/technobabble.asc /etc/apt/sources.list.d/technobabble.sources
-sudo apt update
-sudo apt install technobabble
-```
-
-Run `technobabble` for Classic or `technobabble --layout "Relay Watch"` for Studio. Get later published versions with `sudo apt update` followed by `sudo apt upgrade`. Remove the app with `sudo apt remove technobabble`.
-
-For a one-time install, download the `.deb` above and run `sudo apt install ./technobabble_1.13.0-2_amd64.deb` in the download directory. Revision 2 upgrades the original Ubuntu package in place.
-
-The archive key fingerprint is `A533 F774 E961 CCB6 FDA0 0A90 B588 F42F 73E5 1C2D`. The source definition limits this key to the Technobabble repository.
 
 ### Linux (portable)
 
