@@ -8,27 +8,34 @@ Some panes show real system activity. Others tell a fictional story. In **Relay 
 
 ![Relay Watch showing the radar contact Relay 07, its decoded auxiliary power request, and the engineering bus voltage recovering](docs/images/relay-watch.png)
 
-## Choose an edition
+## Download v1.13
 
-| Edition | What runs | Quick start |
-| --- | --- | --- |
-| Windows | A desktop app and an in-terminal app. Both use Windows counters and the Windows .NET Framework. | Extract `Technobabble-1.13.zip`. Double-click `Technobabble.exe` or run the terminal executable below. |
-| Linux | A Linux terminal app that reads Linux processes, memory, interfaces, and block devices. Tested on x86-64 Ubuntu 26.04 under WSL 2, including with Windows interop disabled. | Install the Ubuntu package below. It uses the Linux .NET 10 runtime. |
+[Windows ZIP](https://github.com/lordtempis/technobabble/releases/download/v1.13/Technobabble-1.13.zip) · [Ubuntu package (amd64)](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-1_amd64.deb) · [Linux source archive](https://github.com/lordtempis/technobabble/releases/download/v1.13/Technobabble-Linux-1.13.0-source.tar.gz) · [SHA-256 checksums](https://github.com/lordtempis/technobabble/releases/download/v1.13/v1.13-SHA256SUMS)
 
-**Windows**, from the extracted folder in PowerShell:
+### Windows
+
+Download the Windows ZIP above and choose **Extract All**. In the extracted folder, double-click `Technobabble.exe` to open Classic Mode in a desktop window. To open Relay Watch in Studio Mode, run this command in PowerShell from that same folder.
 
 ```powershell
 .\Technobabble-Terminal.exe --layout "Relay Watch"
 ```
 
-**Ubuntu**, from the folder containing the downloaded package:
+Both executables use Windows performance counters. They were tested on Windows 11 with .NET Framework 4.8.
+
+### Ubuntu under WSL 2
+
+The Ubuntu package runs natively on x86-64 (`amd64`) and reads Linux system data. In your **Ubuntu terminal**, run the commands below. On Ubuntu 26.04, the tested version, APT installs the required .NET 10 runtime along with Technobabble.
 
 ```sh
+curl -fLO https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-1_amd64.deb
+sudo apt update
 sudo apt install ./technobabble_1.13.0-1_amd64.deb
 technobabble --layout "Relay Watch"
 ```
 
-Start either app without switches for Classic Mode. Try `--layout "System Watch"` for live monitoring or `--layout "Blank Canvas"` to build a dashboard from one pane.
+If APT on an older Ubuntu release cannot find `dotnet-runtime-10.0`, follow the [.NET setup instructions for your Ubuntu version](https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu-install), then rerun the package install command.
+
+Launch either edition without switches for Classic Mode. Try `--layout "System Watch"` for live monitoring or `--layout "Blank Canvas"` to build a dashboard from one pane.
 
 ## Terminal controls
 
