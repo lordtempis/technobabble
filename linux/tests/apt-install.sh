@@ -9,7 +9,9 @@ test "$#" -eq 1
 package=$1
 expected=$(dpkg-deb -f "$package" Version)
 apt-get update -qq
-apt-get install -y --no-install-recommends ca-certificates python3-pyte
+# Minimal images normally exclude manual pages. Test a system with man installed.
+printf 'path-include=/usr/share/man/*\n' > /etc/dpkg/dpkg.cfg.d/zz-technobabble-test-man
+apt-get install -y --no-install-recommends ca-certificates python3-pyte man-db bsdextrautils
 case "$mode" in
     local)
         # Minimal container images may tell dpkg to discard optional documentation.
@@ -30,8 +32,8 @@ case "$mode" in
         apt-get update
         apt-cache policy technobabble
         if [ "$mode" = upgrade-bundled ]; then
-            apt install -y technobabble=1.13.0-2
-            test "$(dpkg-query -W -f='${Version}' technobabble)" = 1.13.0-2
+            apt install -y technobabble=1.13.1-2
+            test "$(dpkg-query -W -f='${Version}' technobabble)" = 1.13.1-2
         fi
         if [ "$mode" != public ]; then
             apt upgrade -y
@@ -47,6 +49,12 @@ if [ "$mode" != upgrade ] && command -v dotnet; then echo "Unexpected system .NE
 dpkg-query -S /usr/bin/technobabble /usr/bin/technobabble-terminal
 technobabble --version
 technobabble-terminal --version
+for name in technobabble technobabble-terminal; do
+    man -w 1 "$name"
+    MANPAGER=cat man 1 "$name" | col -bx > "/tmp/$name.manual"
+    grep -Fq TECHNOBABBLE_LAYOUT_DIR "/tmp/$name.manual"
+done
 python3 /src/tests/terminal.py /usr/bin/technobabble
 apt remove -y technobabble
 test ! -e /usr/bin/technobabble && test ! -e /usr/lib/technobabble/libcoreclr.so
+test ! -e /usr/share/man/man1/technobabble.1.gz && test ! -L /usr/share/man/man1/technobabble-terminal.1.gz

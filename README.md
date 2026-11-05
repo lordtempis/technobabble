@@ -8,11 +8,11 @@ Technobabble turns your terminal into an animated wall of diagnostics. Classic M
 
 ## Download v1.13.1
 
-- **[Download for Debian or Ubuntu (64-bit)](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/technobabble_1.13.1-2_amd64.deb)** · [Install the .deb](#debian-and-ubuntu-deb) · [Package checksum](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/technobabble_1.13.1-2_amd64.deb.sha256)
+- **[Download for Debian or Ubuntu (64-bit)](https://raw.githubusercontent.com/lordtempis/technobabble/apt/pool/main/t/technobabble/technobabble_1.13.1-3_amd64.deb)** · [Install the .deb](#debian-and-ubuntu-deb) · [Package checksum](https://raw.githubusercontent.com/lordtempis/technobabble/apt/pool/main/t/technobabble/technobabble_1.13.1-3_amd64.deb.sha256)
 - **[Download for Windows (ZIP)](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/Technobabble-1.13.1.zip)**
 - **[Download for Linux (portable x86-64 binary, .tar.gz)](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/technobabble-1.13.1-linux-x64.tar.gz)** · [Portable checksum](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/technobabble-1.13.1-linux-x64.tar.gz.sha256)
 - [Download the Linux source archive (.tar.gz)](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/Technobabble-Linux-1.13.1-source.tar.gz)
-- [SHA-256 checksums for all v1.13.1 downloads](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/v1.13.1-SHA256SUMS)
+- [Original GitHub release checksums](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/v1.13.1-SHA256SUMS)
 
 Windows includes a desktop app and a terminal app. The native x86-64 Linux app runs on Debian, Ubuntu (including WSL 2), and compatible glibc distributions. [Watch 27 seconds of Relay Watch](docs/images/relay-watch-demo.gif) or [see the screenshot](#classic-and-studio-modes).
 
@@ -20,10 +20,10 @@ Windows includes a desktop app and a terminal app. The native x86-64 Linux app r
 
 ### Debian and Ubuntu (.deb)
 
-On 64-bit Intel/AMD Debian or Ubuntu, including Ubuntu under WSL, [download the .deb](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/technobabble_1.13.1-2_amd64.deb). Open a terminal in the folder where you saved it and run:
+On 64-bit Intel/AMD Debian or Ubuntu, including Ubuntu under WSL, [download the .deb](https://raw.githubusercontent.com/lordtempis/technobabble/apt/pool/main/t/technobabble/technobabble_1.13.1-3_amd64.deb). Open a terminal in the folder where you saved it and run:
 
 ```sh
-sudo apt install ./technobabble_1.13.1-2_amd64.deb
+sudo apt install ./technobabble_1.13.1-3_amd64.deb
 ```
 
 The package includes .NET. Run `technobabble` for Classic or `technobabble --layout "Relay Watch"` for Studio. Press **Q** to quit. To uninstall, run `sudo apt remove technobabble`.
@@ -79,7 +79,7 @@ Some panes show real system activity. Others tell a fictional story. In **Relay 
 
 ## Terminal controls
 
-The [terminal manual](linux/man/technobabble.1) lists command-line options, keyboard controls, layout locations, and examples.
+Run `man technobabble` for command-line options, keyboard controls, layout locations, and examples. The [terminal manual](linux/man/technobabble.1) ships in Debian package `1.13.1-3` and later.
 
 | Key | Action |
 | --- | --- |
