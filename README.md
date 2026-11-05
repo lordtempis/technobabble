@@ -5,10 +5,10 @@ Making your terminal look like it's doing something important.
 ## Download v1.13
 
 - **[Download for Windows (ZIP)](https://github.com/lordtempis/technobabble/releases/download/v1.13/Technobabble-1.13.zip)**
-- **[Install with APT on Debian or Ubuntu](#debian-and-ubuntu-apt)** · [Download the amd64 .deb](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb) · [Package checksum](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb.sha256)
+- **[Download for Debian or Ubuntu (64-bit)](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb)** · [Install with APT](#debian-and-ubuntu-apt) · [Package checksum](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb.sha256)
 - **[Download for Linux (portable x86-64 binary, .tar.gz)](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble-1.13.0-linux-x64.tar.gz)** · [Portable checksum](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble-1.13.0-linux-x64.tar.gz.sha256)
 - [Download the Linux source archive (.tar.gz)](https://github.com/lordtempis/technobabble/releases/download/v1.13/Technobabble-Linux-1.13.0-source.tar.gz)
-- [SHA-256 checksums for the Windows ZIP, Ubuntu package, and Linux source](https://github.com/lordtempis/technobabble/releases/download/v1.13/v1.13-SHA256SUMS)
+- [Original v1.13 checksums for the Windows ZIP and Linux source](https://github.com/lordtempis/technobabble/releases/download/v1.13/v1.13-SHA256SUMS)
 
 ## Quick install
 

@@ -82,6 +82,13 @@ jobs:
           for image in debian:13-slim ubuntu:24.04; do
             docker run --rm --volume "$PWD:/src:ro" "$image" sh /src/tests/apt-install.sh local
           done
+      - name: Build the revision 1 upgrade fixture from the v1.13 tag
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          git -C .. fetch --no-tags --depth=1 origin tag v1.13
+          fixture=$(mktemp -d)
+          git -C .. archive v1.13 linux | tar -x -C "$fixture"
+          python3 "$fixture/linux/package.py" "$PWD/dist/upgrade-from-v1.13"
       - name: Verify the live signed repository on Debian and Ubuntu
         if: github.event_name == 'workflow_dispatch'
         run: |

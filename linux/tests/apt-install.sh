@@ -18,12 +18,8 @@ case "$mode" in
         ;;
     public|upgrade)
         if [ "$mode" = upgrade ]; then
-            apt-get install -y --no-install-recommends curl
-            cd /tmp
-            old=technobabble_1.13.0-1_amd64.deb
-            curl -fsSLO "https://github.com/lordtempis/technobabble/releases/download/v1.13/$old"
-            echo "4e40bcad5de42941199e832c520cb910886006ac7d862e2718428a2974897995  $old" | sha256sum -c -
-            apt install -y "./$old"
+            apt install -y /src/dist/upgrade-from-v1.13/technobabble_1.13.0-1_amd64.deb
+            test "$(dpkg-query -W -f='${Version}' technobabble)" = 1.13.0-1
         fi
         install -D -m 0644 /src/apt/technobabble.asc /etc/apt/keyrings/technobabble.asc
         install -m 0644 /src/apt/technobabble.sources /etc/apt/sources.list.d/technobabble.sources

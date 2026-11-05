@@ -27,15 +27,9 @@ Download the archive and its matching `.sha256` file from the [v1.13 release](ht
 
 Launch `./technobabble` for Classic Mode. Keep the extracted directory together. The executable loads its runtime from `lib/` and the runtime's licenses are in `dotnet-notices/`.
 
-### Original Ubuntu package (revision 1)
+### Terminal controls
 
-The `.deb` was built and tested on x86-64 Ubuntu 26.04 under WSL 2. From Ubuntu, in the directory containing the package, run:
-
-    sudo apt install ./technobabble_1.13.0-1_amd64.deb
-    technobabble --version
-    technobabble --layout "Relay Watch"
-
-The package installs the Linux runtime dependency through Ubuntu's package manager. The two commands `technobabble` and `technobabble-terminal` launch the same Linux app. If you set a Bash alias for the old Windows bridge, update it to point to `/usr/bin/technobabble`. You can always use that full path directly.
+With the Debian package installed, `technobabble` and `technobabble-terminal` launch the same Linux app. If you set a Bash alias for the old Windows bridge, update it to point to `/usr/bin/technobabble`.
 
 Launch `technobabble` with no options for Classic. Use `--studio` for Studio or `--layout "System Watch"` for a dashboard. **S** switches modes, **Space** pauses, **?** shows controls, and **Q** exits and restores the terminal. In Studio, **E** edits panes, **Tab** selects, **P** pins, **B** sizes dividers, **Y** cycles code typing speed, **W** saves, and **L** opens a layout.
 
