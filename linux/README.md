@@ -4,7 +4,22 @@ Technobabble is a Linux terminal application with Classic and Studio modes. It h
 
 ## Install and run
 
-The binary package was built and tested on x86-64 Ubuntu 26.04 under WSL 2. From Ubuntu, in the directory containing the package, run:
+### Portable Linux archive (x86-64)
+
+Use the binary archive on a glibc-based Linux distribution with its standard system libraries, including ICU and OpenSSL. It includes .NET 10 and runs from your own directory without an installer or administrator access. The target is Intel/AMD 64-bit Linux with glibc 2.27 or later. Alpine/musl and ARM use different runtime builds.
+
+Download the archive and its matching `.sha256` file from the [v1.13 release](https://github.com/lordtempis/technobabble/releases/tag/v1.13). In the download directory, run:
+
+    sha256sum -c technobabble-1.13.0-linux-x64.tar.gz.sha256
+    tar -xzf technobabble-1.13.0-linux-x64.tar.gz
+    cd technobabble-1.13.0-linux-x64
+    ./technobabble --layout "Relay Watch"
+
+Launch `./technobabble` for Classic Mode. Keep the extracted directory together. The executable loads its runtime from `lib/` and the runtime's licenses are in `dotnet-notices/`.
+
+### Ubuntu package
+
+The `.deb` was built and tested on x86-64 Ubuntu 26.04 under WSL 2. From Ubuntu, in the directory containing the package, run:
 
     sudo apt install ./technobabble_1.13.0-1_amd64.deb
     technobabble --version
@@ -30,7 +45,8 @@ Install the .NET 10 SDK in Ubuntu and run the following in the extracted source 
     dotnet run -c Release --project tests/Checks.csproj
     python3 tests/terminal.py ./bin/Release/net10.0/technobabble
     python3 package.py ./dist
+    python3 package-portable.py ./dist
 
-The PTY tests require the Ubuntu package `python3-pyte`. Packaging uses `dpkg-deb`. The source includes preconverted image resources, so building and running require no image decoder or online package restore.
+The terminal tests use Python's `pyte` library. Building the Ubuntu package uses `dpkg-deb`. The portable packager downloads the generic Linux runtime packs from NuGet when needed. Both packages include preconverted image resources.
 
 Technobabble is an independent recreation of Dustin Kirkland's Hollywood. Licensing and asset credits are in `LICENSE.txt` and `NOTICE.txt`.

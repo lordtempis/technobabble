@@ -21,9 +21,9 @@ The executables appear in `windows/`. To exercise the terminal UI, run `.\window
 
 The packaging script builds both targets and writes the Windows release ZIP to `windows/dist/`.
 
-## Ubuntu / WSL 2
+## Linux
 
-Install the Linux .NET 10 SDK. The terminal integration test uses `python3-pyte`, and the package build uses Python 3 and `dpkg-deb`.
+Install the Linux .NET 10 SDK and Python 3. The terminal integration test uses Python's `pyte` library. The optional Ubuntu package also requires `dpkg-deb`.
 
 ```sh
 cd linux
@@ -31,9 +31,10 @@ dotnet build -c Release
 dotnet run -c Release --project tests/Checks.csproj
 /usr/bin/python3 tests/terminal.py ./bin/Release/net10.0/technobabble
 python3 package.py ./dist
+python3 package-portable.py ./dist
 ```
 
-The PTY test starts real Linux terminal sessions, saves layouts in a temporary data directory, and checks that the shell settings are restored. The resulting Ubuntu package appears in `linux/dist/`.
+The PTY test starts real Linux terminal sessions, saves layouts in a temporary data directory, and checks that the shell settings are restored. Both packaging commands write to `linux/dist/`. The portable script restores Microsoft's generic `linux-x64` packs from NuGet, bundles the runtime and its notices, and writes a SHA-256 file beside the archive. CI extracts this archive and runs the terminal suite in a Debian container with no system .NET installation.
 
 ## Changes and release boundaries
 
