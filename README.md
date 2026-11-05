@@ -17,6 +17,10 @@ Technobabble turns your terminal into an animated wall of diagnostics. Classic M
 
 Windows includes a desktop app and a terminal app. The native x86-64 Linux app runs on Debian, Ubuntu (including WSL 2), and compatible glibc distributions. [Watch 27 seconds of Relay Watch](docs/images/relay-watch-demo.gif) or [see the screenshot](#classic-and-studio-modes).
 
+## macOS preview
+
+To build the terminal preview on an Apple silicon or Intel Mac, use the full `preview/macos` branch. The Mac app shares code with the Linux edition. [Browse the macOS preview source](https://github.com/lordtempis/technobabble/tree/preview/macos/macos) · [Build instructions for macOS](https://github.com/lordtempis/technobabble/blob/preview/macos/macos/README.md#build-on-a-mac)
+
 ## Quick install
 
 ### Debian and Ubuntu (.deb)
