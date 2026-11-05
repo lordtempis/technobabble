@@ -79,6 +79,8 @@ Some panes show real system activity. Others tell a fictional story. In **Relay 
 
 ## Terminal controls
 
+The [terminal manual](linux/man/technobabble.1) lists command-line options, keyboard controls, layout locations, and examples.
+
 | Key | Action |
 | --- | --- |
 | **S** | Switch between Classic and Studio. The desktop edition uses **F2**. |

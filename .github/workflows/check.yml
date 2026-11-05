@@ -95,6 +95,7 @@ jobs:
             sha256sum -c "$1.sha256"
             tar -xzf "$1" -C /tmp
             cd "/tmp/${1%.tar.gz}"
+            cmp /src/man/technobabble.1 share/man/man1/technobabble-terminal.1
             ./technobabble --version
             /usr/bin/python3 /src/tests/terminal.py "$PWD/technobabble"
           '

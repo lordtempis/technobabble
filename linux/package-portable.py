@@ -11,6 +11,8 @@ import tarfile
 import tempfile
 import xml.etree.ElementTree as ET
 
+from manpage import install_manual
+
 
 ROOT = Path(__file__).resolve().parent
 PROJECT = ROOT / "Technobabble.csproj"
@@ -58,6 +60,7 @@ def build(out):
         ], check=True)
         for command in ("technobabble", "technobabble-terminal"):
             (bundle / command).symlink_to("lib/technobabble")
+        install_manual(bundle / "share/man/man1")
         for doc in ("README.md", "LICENSE.txt", "NOTICE.txt"):
             shutil.copyfile(ROOT / doc, bundle / doc)
         shutil.copyfile(ROOT / "source/assets/standard.flf", bundle / "standard.flf")

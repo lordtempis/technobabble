@@ -9,6 +9,8 @@ import tarfile
 import tempfile
 import xml.etree.ElementTree as ET
 
+from manpage import install_manual
+
 ROOT = Path(__file__).resolve().parent
 PROJECT = ROOT / "Technobabble.csproj"
 VERSION = ET.parse(PROJECT).findtext(".//Version")
@@ -55,6 +57,7 @@ def build(out, archive):
             file.chmod(0o755 if file.name == "technobabble" else 0o644)
         for name in ("technobabble", "technobabble-terminal"):
             (commands / name).symlink_to("../lib/technobabble/technobabble")
+        install_manual(stage / "usr/share/man/man1", compressed=True)
         for name in ("LICENSE.txt", "NOTICE.txt", "README.md"):
             shutil.copyfile(ROOT / name, doc / name)
         shutil.copyfile(ROOT / "source/assets/standard.flf", doc / "standard.flf")
