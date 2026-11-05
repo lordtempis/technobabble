@@ -50,7 +50,9 @@ jobs:
       - name: Check the optional Windows bridge key decoder
         run: /usr/bin/python3 -B ../windows/source/tests/wsl-keys.py
       - name: Build the portable Linux archive
-        run: python3 package-portable.py ./dist
+        run: |
+          python3 package-portable.py ./dist
+          python3 package.py ./dist/apt --portable ./dist/technobabble-*-linux-x64.tar.gz
       - name: Run the extracted archive on Debian 13 without system .NET
         run: |
           docker run --rm --volume "$PWD:/src:ro" debian:13-slim sh -eu -c '
@@ -75,3 +77,15 @@ jobs:
             linux/dist/*-linux-x64.tar.gz.sha256
           if-no-files-found: error
           compression-level: 0
+      - name: Install, run and remove the bundled deb on Debian and Ubuntu
+        run: |
+          for image in debian:13-slim ubuntu:24.04; do
+            docker run --rm --volume "$PWD:/src:ro" "$image" sh /src/tests/apt-install.sh local
+          done
+      - name: Verify the live signed repository on Debian and Ubuntu
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          for image in debian:13-slim ubuntu:24.04; do
+            docker run --rm --volume "$PWD:/src:ro" "$image" sh /src/tests/apt-install.sh public
+          done
+          docker run --rm --volume "$PWD:/src:ro" ubuntu:26.04 sh /src/tests/apt-install.sh upgrade

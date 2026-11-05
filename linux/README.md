@@ -4,6 +4,16 @@ Technobabble is a Linux terminal application with Classic and Studio modes. It h
 
 ## Install and run
 
+### Debian and Ubuntu with APT (amd64)
+
+The project APT repository provides Technobabble with .NET bundled. On 64-bit Intel/AMD Debian or Ubuntu, including Ubuntu under WSL, follow the [one-time repository setup](https://github.com/lordtempis/technobabble#debian-and-ubuntu-apt). Then install and launch:
+
+    sudo apt update
+    sudo apt install technobabble
+    technobabble --layout "Relay Watch"
+
+Future published versions are installed by `sudo apt upgrade`. Remove the app with `sudo apt remove technobabble`. For a one-time install, download `technobabble_1.13.0-2_amd64.deb` from the [release](https://github.com/lordtempis/technobabble/releases/tag/v1.13) and run `sudo apt install ./technobabble_1.13.0-2_amd64.deb` in the download directory.
+
 ### Portable Linux archive (x86-64)
 
 Use the binary archive on a glibc-based Linux distribution with its standard system libraries, including ICU and OpenSSL. It includes .NET 10 and runs from your own directory without an installer or administrator access. The target is Intel/AMD 64-bit Linux with glibc 2.27 or later. Alpine/musl and ARM use different runtime builds.
@@ -17,7 +27,7 @@ Download the archive and its matching `.sha256` file from the [v1.13 release](ht
 
 Launch `./technobabble` for Classic Mode. Keep the extracted directory together. The executable loads its runtime from `lib/` and the runtime's licenses are in `dotnet-notices/`.
 
-### Ubuntu package
+### Original Ubuntu package (revision 1)
 
 The `.deb` was built and tested on x86-64 Ubuntu 26.04 under WSL 2. From Ubuntu, in the directory containing the package, run:
 
@@ -46,6 +56,7 @@ Install the .NET 10 SDK in Ubuntu and run the following in the extracted source 
     python3 tests/terminal.py ./bin/Release/net10.0/technobabble
     python3 package.py ./dist
     python3 package-portable.py ./dist
+    python3 package.py ./dist --portable ./dist/technobabble-1.13.0-linux-x64.tar.gz
 
 The terminal tests use Python's `pyte` library. Building the Ubuntu package uses `dpkg-deb`. The portable packager downloads the generic Linux runtime packs from NuGet when needed. Both packages include preconverted image resources.
 

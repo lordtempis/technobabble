@@ -1,42 +1,89 @@
 #!/usr/bin/env python3
-"""Build the Ubuntu package using a Linux .NET 10 SDK. No NuGet packages."""
+"""Build a Debian package from the portable runtime, or the original small Ubuntu package."""
+import argparse
+import hashlib
 from pathlib import Path
-import shutil, subprocess, sys, tempfile
+import shutil
+import subprocess
+import tarfile
+import tempfile
+import xml.etree.ElementTree as ET
 
-root=Path(__file__).resolve().parent
-out=Path(sys.argv[1] if len(sys.argv)>1 else root/'dist').resolve()
-out.mkdir(parents=True,exist_ok=True)
-arch=subprocess.check_output(['dpkg','--print-architecture'],text=True).strip()
-version='1.13.0-1'
-with tempfile.TemporaryDirectory(prefix='technobabble-package-') as temp:
-    stage=Path(temp)/'package'
-    app=stage/'usr/lib/technobabble'
-    commands=stage/'usr/bin'
-    doc=stage/'usr/share/doc/technobabble'
-    metadata=stage/'DEBIAN'
-    for directory in (commands,doc,metadata):directory.mkdir(parents=True)
-    subprocess.run(['dotnet','publish',str(root/'Technobabble.csproj'),'-c','Release',
-                    '--no-self-contained','--nologo','-o',str(app)],check=True)
-    # DrvFs may present build artifacts as 0777. Set the installed modes in
-    # Linux staging so only root can modify the system-installed application.
-    for file in app.iterdir():
-        file.chmod(0o755 if file.name=='technobabble' else 0o644)
-    for name in ('technobabble','technobabble-terminal'):
-        (commands/name).symlink_to('../lib/technobabble/technobabble')
-    for name in ('LICENSE.txt','NOTICE.txt','README.md'):
-        shutil.copyfile(root/name,doc/name)
-    shutil.copyfile(root/'source/assets/standard.flf',doc/'standard.flf')
-    (metadata/'control').write_text(f'''Package: technobabble
+ROOT = Path(__file__).resolve().parent
+PROJECT = ROOT / "Technobabble.csproj"
+VERSION = ET.parse(PROJECT).findtext(".//Version")
+SYSTEM_LIBS = (
+    "ca-certificates, libc6 (>= 2.27), libgcc-s1, libstdc++6, libgssapi-krb5-2, "
+    "libicu78 | libicu76 | libicu74 | libicu72 | libicu70, libssl3t64 | libssl3, "
+    "libbrotli1, tzdata, zlib1g"
+)
+
+
+def install_portable(archive, work, app, doc):
+    name = f"technobabble-{VERSION}-linux-x64"
+    digest = hashlib.sha256(archive.read_bytes()).hexdigest()
+    if (archive.name != name + ".tar.gz" or
+            Path(str(archive) + ".sha256").read_text().split() != [digest, archive.name]):
+        raise ValueError("Expected the matching portable archive and its SHA-256 file")
+    with tarfile.open(archive, "r:gz") as tar:
+        tar.extractall(work, filter="data")
+    bundle = work / name
+    shutil.move(bundle / "lib", app)
+    shutil.move(bundle / "dotnet-notices", doc / "dotnet-notices")
+
+
+def build(out, archive):
+    out.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory() as tmp, tempfile.TemporaryDirectory(dir=out) as scratch:
+        work = Path(tmp)
+        stage = work / "package"
+        app = stage / "usr/lib/technobabble"
+        commands = stage / "usr/bin"
+        doc = stage / "usr/share/doc/technobabble"
+        metadata = stage / "DEBIAN"
+        for directory in (app.parent, commands, doc, metadata):
+            directory.mkdir(parents=True)
+        if archive:
+            arch, revision, depends = "amd64", "2", SYSTEM_LIBS
+            install_portable(archive, work, app, doc)
+        else:
+            arch = subprocess.check_output(["dpkg", "--print-architecture"], text=True).strip()
+            revision, depends = "1", "dotnet-runtime-10.0"
+            subprocess.run(["dotnet", "publish", str(PROJECT), "-c", "Release", "--no-self-contained",
+                            "--nologo", "-o", str(app)], check=True)
+        for file in app.iterdir():
+            file.chmod(0o755 if file.name == "technobabble" else 0o644)
+        for name in ("technobabble", "technobabble-terminal"):
+            (commands / name).symlink_to("../lib/technobabble/technobabble")
+        for name in ("LICENSE.txt", "NOTICE.txt", "README.md"):
+            shutil.copyfile(ROOT / name, doc / name)
+        shutil.copyfile(ROOT / "source/assets/standard.flf", doc / "standard.flf")
+        shutil.copyfile(ROOT / "NOTICE.txt", doc / "copyright")
+        version = f"{VERSION}-{revision}"
+        (metadata / "control").write_text(f"""Package: technobabble
 Version: {version}
 Architecture: {arch}
-Maintainer: Technobabble local build <root@localhost>
+Maintainer: Technobabble Project <project@technobabble.invalid>
 Section: games
 Priority: optional
-Depends: dotnet-runtime-10.0
+Homepage: https://github.com/lordtempis/technobabble
+Depends: {depends}
 Description: Animated Linux terminal dashboards and cinematic monitoring panes
  Classic and Studio modes, live Linux system data, editable layouts and
  synchronized fictional Relay Watch incidents.
-''')
-    target=out/f'technobabble_{version}_{arch}.deb'
-    subprocess.run(['dpkg-deb','--root-owner-group','--build',str(stage),str(target)],check=True)
-    print(target)
+""")
+        deb = Path(scratch) / f"technobabble_{version}_{arch}.deb"
+        subprocess.run(["dpkg-deb", "--root-owner-group", "-Zxz", "-z3", "--build", stage, deb], check=True)
+        checksum = Path(str(deb) + ".sha256")
+        checksum.write_text(f"{hashlib.sha256(deb.read_bytes()).hexdigest()}  {deb.name}\n")
+        for file in (deb, checksum):
+            file.replace(out / file.name)
+        print(out / deb.name)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("out", nargs="?", type=Path, default=ROOT / "dist")
+    parser.add_argument("--portable", type=Path, metavar="ARCHIVE", help="bundle the linux-x64 runtime")
+    args = parser.parse_args()
+    build(args.out.resolve(), args.portable)
