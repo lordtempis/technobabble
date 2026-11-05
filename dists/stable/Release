@@ -2,19 +2,19 @@ Acquire-By-Hash: yes
 Architectures: amd64
 Codename: stable
 Components: main
-Date: Thu, 05 Nov 2026 15:33:05 +0000
+Date: Thu, 05 Nov 2026 16:02:08 +0000
 Label: Technobabble
 Origin: Technobabble
 Suite: stable
 MD5Sum:
- 6e1fc3882e5c313c243c09d9db57f0af             2931 main/binary-amd64/Packages
- cb5712aba44c0edaf6a7ecbac0e3ee89             1031 main/binary-amd64/Packages.gz
+ a80cc1db0958f637a2fffa82b08fd51c             3908 main/binary-amd64/Packages
+ 0c6d60d74194d764eda3c6d51e525904             1220 main/binary-amd64/Packages.gz
 SHA1:
- dde80f27a97f9699e76f7503268c88d69f10e95f             2931 main/binary-amd64/Packages
- ed1385cade2937c53b0aa14893a61aa083750d1c             1031 main/binary-amd64/Packages.gz
+ 1c760a9e15c56a24d4fc3f0811d3339ca5d130a0             3908 main/binary-amd64/Packages
+ b23e6e09352b911d6455dfb59d96b15d9ccdb2c3             1220 main/binary-amd64/Packages.gz
 SHA256:
- 3e444bac0e4788c53a4c15ccc436a510916243034a8692f96d6654410012ace4             2931 main/binary-amd64/Packages
- 2b5c31cafcb929f4bfec79491f8756a59afbf15f8f185f93bcfed6557f0964d9             1031 main/binary-amd64/Packages.gz
+ 4d377154e889097d802ebe468d7b6e5f026443b7d4d10f18a7d5b5e9d9d88277             3908 main/binary-amd64/Packages
+ f25a954f5eef84de126192acca48c47e640d3df9f18f1cbc2181d1ea5a9cd9a5             1220 main/binary-amd64/Packages.gz
 SHA512:
- a19ed7367b96e0578578d50cbeb183c25b805dca9d8ed2db7a8c3c0eb40c7f2368997b8b5b70b4cf99aab3bdb4dea8f2928928c78703ace6af2aa4c5496a2c77             2931 main/binary-amd64/Packages
- 72c257551f1c016ea81bd14ef2c465a1889e702a40b00fdc473c09533af54d91583883bc11cea92c186cad566620b6b191d491dcba043ddf0a611a96c866b939             1031 main/binary-amd64/Packages.gz
+ 5794e4b023b7421ef7ff7c2c6f70aae2b02ab03942315a562ed6835afae4db6be965d8423222ea4371ad944e1a4995629cd85b2bddfb54c2e02e55319d7f4179             3908 main/binary-amd64/Packages
+ d0546908d806a7922c73052cd3029867f6940b982ff9b2ad88092201d62b2cef7b2837420b45084325b2e916b2ca6769d94850700379987bdf6483355113fff4             1220 main/binary-amd64/Packages.gz
