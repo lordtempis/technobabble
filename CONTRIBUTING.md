@@ -37,6 +37,12 @@ python3 package.py ./dist --portable ./dist/technobabble-1.13.2-linux-x64.tar.gz
 
 The PTY test starts real Linux terminal sessions, saves layouts in a temporary data directory, and checks that the shell settings are restored. Both packaging commands write to `linux/dist/`. The portable script restores Microsoft's generic `linux-x64` packs from NuGet, bundles the runtime and its notices, and writes a SHA-256 file beside the archive. CI extracts this archive and runs the terminal suite in a Debian container with no system .NET installation.
 
+## Test the Mac preview on macOS Tahoe 26
+
+Open [macOS Tahoe 26 compatibility](https://github.com/lordtempis/technobabble/actions/workflows/macos-compatibility.yml) in GitHub Actions. Choose **Run workflow**, leave the branch set to **main**, and click **Run workflow**. The first job records the exact commit from `preview/macos` used by both Mac jobs. Pushing to the preview branch also starts the checks automatically.
+
+Look for a green check next to **Apple silicon (ARM64)** and **Intel (x64)**. Each runner verifies its OS and CPU, builds and installs a self-contained package, then tests the shared Studio features and launches the installed app in a terminal. A successful job uploads its own `.pkg` and SHA-256 checksum under **Artifacts** on the run summary. These are unsigned, unnotarized preview installers. For a failed job, open its first red step or download its diagnostics artifact if the runner started.
+
 ## Publish an APT update
 
 Build the bundled `.deb` with a higher Debian version than the last published package. Test it with APT on Debian and Ubuntu before distributing it. The repository keeps each version's bytes under an immutable filename.

@@ -1,0 +1,28 @@
+name: macOS Tahoe 26 compatibility
+on: workflow_dispatch
+
+permissions:
+  contents: read
+
+jobs:
+  source:
+    name: Select the macOS preview commit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      sha: ${{ steps.preview.outputs.sha }}
+    steps:
+      - id: preview
+        shell: bash
+        run: |
+          ref=refs/heads/preview/macos
+          sha=$(git ls-remote --exit-code "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" "$ref" | cut -f1)
+          [[ $sha =~ ^[0-9a-f]{40}$ ]]
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "Both Mac jobs will test [$sha]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/commit/$sha) from \`preview/macos\`." >> "$GITHUB_STEP_SUMMARY"
+
+  compatibility:
+    needs: source
+    uses: lordtempis/technobabble/.github/workflows/macos-preview.yml@preview/macos
+    with:
+      source-sha: ${{ needs.source.outputs.sha }}
