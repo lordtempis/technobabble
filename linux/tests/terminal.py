@@ -11,15 +11,35 @@ class Session:
         self.screen=pyte.Screen(width,height)
         self.stream=pyte.ByteStream(self.screen)
         self.resize(width,height)
-        self.pid=os.fork()
-        if self.pid==0:
+        # Darwin revokes a controlling tty when its session leader exits. Keep
+        # a shell-like leader alive to check tty settings after the app quits.
+        pid_pipe=os.pipe() if sys.platform=="darwin" else None
+        self.leader=os.fork()
+        if self.leader==0:
             os.close(self.master);os.setsid();fcntl.ioctl(self.slave,termios.TIOCSCTTY,0)
             for fd in (0,1,2):os.dup2(self.slave,fd)
             if self.slave>2:os.close(self.slave)
+            if pid_pipe is not None:
+                os.close(pid_pipe[0])
+                child=os.fork()
+                if child:
+                    os.write(pid_pipe[1],str(child).encode())
+                    os.close(pid_pipe[1])
+                    status=os.waitpid(child,0)[1]
+                    if termios.tcgetattr(0)!=self.original:
+                        os.write(2,b"Application did not restore terminal modes\n")
+                        os._exit(1)
+                    os._exit(os.waitstatus_to_exitcode(status) % 256)
+                os.close(pid_pipe[1])
             env=dict(os.environ,TERM='xterm-256color',PATH='/usr/bin:/bin',XDG_DATA_HOME=data)
             for key in ('TECHNOBABBLE_LAYOUT_DIR','HOLLYWOOD_LAYOUT_DIR','WSL_INTEROP','WSLENV'):env.pop(key,None)
             if layout_dir is not None:env['TECHNOBABBLE_LAYOUT_DIR']=str(layout_dir)
             os.execve(app,[app]+args,env)
+        self.pid=self.leader
+        if pid_pipe is not None:
+            os.close(pid_pipe[1])
+            self.pid=int(os.read(pid_pipe[0],32))
+            os.close(pid_pipe[0])
         self.take(.7)
     def resize(self,w,h):
         fcntl.ioctl(self.slave,termios.TIOCSWINSZ,struct.pack('HHHH',h,w,0,0))
@@ -45,15 +65,16 @@ class Session:
             else:os.kill(self.pid,signal.SIGTERM)
             deadline=time.monotonic()+5
             while time.monotonic()<deadline:
-                pid,status=os.waitpid(self.pid,os.WNOHANG)
+                pid,status=os.waitpid(self.leader,os.WNOHANG)
                 if pid:break
                 self.take(.1)
             else:
-                os.kill(self.pid,signal.SIGKILL);os.waitpid(self.pid,0)
+                os.kill(self.pid,signal.SIGKILL);os.waitpid(self.leader,0)
                 raise AssertionError('Terminal did not exit')
             if kind is None:
                 assert os.waitstatus_to_exitcode(status)==0,status
-                assert termios.tcgetattr(self.slave)==self.original,'Linux tty modes were not restored'
+                if self.pid==self.leader:
+                    assert termios.tcgetattr(self.slave)==self.original,'Linux tty modes were not restored'
         finally:os.close(self.master);os.close(self.slave)
 
 def check(app):

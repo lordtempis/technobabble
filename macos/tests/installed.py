@@ -1,5 +1,6 @@
 """Exercise the installed macOS payload, real counters, and interactive terminal."""
 import ctypes
+from contextlib import contextmanager
 import os
 from pathlib import Path
 import runpy
@@ -28,8 +29,21 @@ print(f"Native Mach counters: {cores} CPUs, {total.value} bytes of memory",flush
 
 with tempfile.TemporaryDirectory() as tmp:
     layouts = Path(tmp)/"layouts"
+    @contextmanager
     def launch(*args):
-        return Session(app,tmp,list(args),layout_dir=layouts)
+        with Session(app,tmp,list(args),layout_dir=layouts) as s:
+            # First launch loads the bundled runtime and assets. Wait for a real
+            # status line instead of assuming every host paints in 700 ms.
+            deadline=time.monotonic()+15
+            while time.monotonic()<deadline:
+                footer=s.screen.display[-1]
+                if "TECHNOBABBLE / STUDIO" in footer or "technobabble*" in footer:
+                    break
+                s.take(.2)
+            else:
+                subprocess.run(["ps","-o","pid,state,wchan,comm","-p",str(s.pid)])
+                raise AssertionError(("No initial frame",args,[r.strip() for r in s.screen.display if r.strip()]))
+            yield s
     with launch("--layout","Relay Watch") as s:
         assert all(title in s.body for title in ("SENSOR SWEEP","SIGNAL DECODER","ENGINEERING")), s.screen.display
         assert s.body.count("#001") == 3
