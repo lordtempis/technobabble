@@ -1,0 +1,24 @@
+Technobabble for Linux 1.13.0
+
+Built with Ubuntu's .NET 10 SDK on x86-64 Ubuntu 26.04.1 under WSL 2. The
+Linux apphost is an ELF executable and uses the Linux .NET 10 runtime. No
+NuGet packages, Windows executable, Windows DLL imports, Windows mount or
+Python bridge are required to run it.
+
+The regression suite rendered all 26 widgets and exercised Studio layouts,
+the editor, undo, typing, shuffled Relay Watch incidents, resize, and Classic
+mode isolation. Live checks matched RAM to Linux MemTotal, found the test's
+own Linux PID and start time, and sampled the Linux eth0 interface, four block
+devices, readable system logs and an NVIDIA adapter. Other GPU hardware was
+not available for live tests.
+
+Actual Linux PTY tests covered Classic, Studio, shared incident identity,
+process filtering, disk and GPU readouts, keyboard input, saved layout reload,
+mode switching, paused resize, Q, Ctrl+C, SIGTERM and exact tty restoration.
+
+In a private user and mount namespace, a fresh binfmt_misc instance had no
+Windows PE handler. A genuine PE executable was rejected with ENOEXEC. A
+private tmpfs hid /mnt, including /mnt/c. With a Linux-only PATH, the source
+built from Linux storage, the data/regression tests passed, and the executable
+extracted from the distribution package passed the PTY tests. The distro's
+ordinary Windows interop configuration remained enabled outside that test.

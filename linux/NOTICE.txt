@@ -1,0 +1,21 @@
+Technobabble for Linux is an independent recreation of Dustin Kirkland's
+Hollywood. The Linux application source is distributed under Apache License
+2.0. See LICENSE.txt.
+
+Upstream Hollywood
+  Copyright 2014-2026 Dustin Kirkland <dustin.kirkland@gmail.com>
+  https://github.com/dustinkirkland/hollywood
+  Reference commit b715325107cb3f54f77831c3a9d23adcdfe8de1d
+  Apache License 2.0, as stated in the upstream scripts and debian/copyright.
+
+This Linux edition uses C# implementations of the launcher and widgets. The
+upstream world map (share/hollywood/map.jpg) was resized and embedded as RGB
+data. Its soundwave.mp4 was sampled into a 208-frame atlas and embedded in the
+same format. The original map and sampled atlas JPEGs are included with the
+source alongside the preconverted resources.
+
+FIGlet Standard font
+  https://github.com/cmatsuoka/figlet/blob/master/fonts/standard.flf
+  Standard by Glenn Chappell and Ian Chai. Additional contributors are identified
+  in the font header. The unmodified font and its permission notice are included
+  in source/assets/standard.flf.

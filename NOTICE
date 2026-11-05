@@ -1,0 +1,22 @@
+Technobabble
+
+The Windows and Linux editions are independent recreations of Dustin Kirkland's
+Hollywood. The application source is distributed under the Apache License 2.0.
+Earlier Windows releases used the name Hollywood for Windows.
+
+Upstream Hollywood
+  Copyright 2014-2026 Dustin Kirkland <dustin.kirkland@gmail.com>
+  https://github.com/dustinkirkland/hollywood
+  Reference commit b715325107cb3f54f77831c3a9d23adcdfe8de1d
+  Apache License 2.0, as stated in the upstream scripts and debian/copyright.
+
+The Windows edition embeds the upstream map.jpg and a sampled atlas derived
+from soundwave.mp4. The Linux edition uses resized RGB data derived from the
+map and atlas. Detailed asset provenance is in windows/NOTICE.txt and
+linux/NOTICE.txt.
+
+FIGlet Standard font
+  Standard by Glenn Chappell and Ian Chai.
+  https://github.com/cmatsuoka/figlet/blob/master/fonts/standard.flf
+  Each edition includes the unmodified font, its additional contributor
+  credits, and its permission notice in source/assets/standard.flf.

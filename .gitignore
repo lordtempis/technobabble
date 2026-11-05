@@ -1,0 +1,22 @@
+# Compiled and packaged files
+**/[Bb]in/
+**/[Oo]bj/
+**/dist/
+*.exe
+*.dll
+*.pdb
+*.deb
+*.zip
+*.tar.gz
+
+# Local preferences, test files, and tool caches
+*.layout
+*.user
+*.suo
+.vs/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+/work/
+/outputs/

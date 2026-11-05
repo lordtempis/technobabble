@@ -1,0 +1,150 @@
+Technobabble 1.13
+
+Both executable regression suites passed. Across 64 seeds and 12 rounds per
+seed, every round contained all twelve contacts exactly once and its first
+contact differed from the previous round's last. Seeded checks also exercised
+large time jumps and revisiting rounds. A dashboard run through a complete
+round verified that the radar contact, decoded request, engineering result and
+outgoing acknowledgment all belonged to the same incident. Solo panes, late
+joins, paused resizing, undo and mode switching passed.
+
+The native Windows terminal opened the new build and exercised pause, resizing,
+Classic restoration and saving. An actual Ubuntu PTY capture followed Kepler 46
+from detection through acknowledgment and then switched to Mirage 18. All three
+panes agreed on the contact, incident number, clock and phase.
+
+Technobabble 1.12
+
+Both builds passed the regression suites. Relay Watch was tested through its
+built-in layout and the pane editor, with both grouped and standalone widgets.
+Checks cover contact acquisition, partial decoding, typed commands, repair
+telemetry, acknowledgment, rollover, late joins, remove/undo, and Classic
+suspension. All 26 widgets render across five sizes, including one cell.
+
+Actual Ubuntu PTY frames showed matching contact IDs, incident clocks and
+states in all three panes through all six phases of Relay 07, then the handoff
+to Kestrel 12. Checks covered borders, paused resizing, Classic return, editor
+swapping/undo and saved layout reopening. The Windows terminal also passed
+pause, resize, mode restoration and saving. The native desktop dashboard
+animated, retained its paused frame through Classic, saved and exited cleanly.
+The original engine and embedded Classic source files match v1.11. Comparing
+both binaries matched 800 Classic layout snapshots and 135 widget frames.
+
+Technobabble 1.11
+
+The renamed desktop and terminal binaries were compiled and exercised on Windows 11.
+Both regression suites passed. A legacy typing layout was discovered and opened;
+saving under the same name wrote a Technobabble copy, preserved the original,
+and retained a single menu entry. Both layout-directory overrides were tested.
+The native desktop window was located by its new title. Native terminal and
+Ubuntu PTY checks exercised Classic, Studio, typing, saved layouts and resize.
+The 80-column status line preserves the complete selected typing speed.
+
+Earlier releases under the Hollywood for Windows name:
+
+Hollywood for Windows 1.10
+
+Studio code supports scrolling plus slow, normal and fast typing. Both builds
+passed the full regression suite. The typing tests verified incremental source
+characters, different speeds, cursor continuity, blank lines, file rollover,
+mode switching, and preservation of the selected speed through undo and layout
+save/load. Invalid speed tokens were rejected before changing the current layout.
+Scrolling still covered every wrapped row of all 31 bundled source files.
+
+In the desktop app, Y changed speed, Space froze rendering, F5 saved the speed
+and F2 restored it after visiting Classic. In the Windows terminal and an actual
+Ubuntu PTY, the editor placed the code widget, Y selected all three speeds, and
+W and L saved and reopened the layout. Captured Ubuntu frames exactly matched
+successively longer prefixes of the source file. Pausing and resizing preserved
+the cursor and text. Both terminal sessions exited cleanly.
+
+Formats 1/2/3 load in their existing scrolling mode. Only a layout saved with
+typing enabled requires format 4 and Hollywood 1.10 or later. Playback position
+starts fresh when a layout is opened.
+
+The following sections describe earlier releases.
+
+Hollywood for Windows 1.9.2
+
+Studio's code pane scrolls all 30 bundled application source files. Both
+executables passed their regression suites. At 37 columns, the new test
+compared all 6,236 wrapped rows to the embedded files, including the final row
+and the transition into every next file. Each complete file was shown once
+before the cycle repeated. The test also checked colors across scrolling rows,
+a one-column resize, and restoration of the original view while paused.
+
+In a Windows terminal the pane advanced 43 consecutive rows across ten capture
+intervals. In Ubuntu, the initial 52-row pane matched the source text and then
+advanced 54 consecutive rows. Resizing a paused pane and restoring its width
+returned to the same frame. Both editions exited cleanly. A separate comparison
+with the v1.9.1 desktop binary matched text and colors in 45 sampled frames of
+Classic code and bat, and Studio bat.
+
+The following sections describe earlier releases.
+
+Hollywood for Windows 1.9.1 - November 4, 2026
+
+Both executables were rebuilt. Their regression suites passed, including all
+12 simulated Studio pv file names and target sizes, 100% completion before
+rollover, compact display and mode changes at the same animation tick. The
+expected Classic row was captured from the previous release at 72 columns.
+
+The Ubuntu launcher was exercised through Blank Canvas and the E widget picker.
+Terminal capture confirmed different file names and sizes in successive
+transfers, monotonic progress, completed history, pause, resize, mode switching,
+clean exit and restoration of shell settings. The playlist models transfers
+using scene time and generated metadata. It does not copy files.
+
+Prior pane-editor validation from version 1.9 follows.
+
+Hollywood for Windows 1.9 - November 4, 2026
+
+Built and tested on Windows 11 using the Windows .NET Framework compiler.
+Both desktop and terminal regression suites pass. They cover all 23 widgets,
+original Classic random splitting/rebuild behavior, monitoring calculations,
+pinning, old/new layouts, process identity/history, network selection, weighted
+geometry, tiny windows and Studio restoration after Classic activity.
+
+New pane-editor checks cover all widget choices, both split orientations,
+replacement and swapping existing widgets, nested and root-level removal,
+expanding sibling groups, selected-pane identity, automatic pinning, timed and
+manual shuffle stability, one-pane and 20-pane limits, undersized split rejection,
+20-step bounded undo, current monitoring preferences surviving undo, saving and
+loading, failed-load atomicity, mode switching and history reset on layout load.
+Editor rendering is checked down to a one-cell window. E/U are inactive in Classic.
+
+Windows sampling took about seven seconds to publish the initial sample on this
+host. The regression suite now allows up to 20 seconds for that first sample;
+the application's sampling and Classic behavior were not changed.
+
+Native desktop integration uses a private Windows desktop, without moving the
+user's windows. The actual Pane, Action and Widget dropdowns are exercised:
+column/row splits, replacement, swapping, pane selection, removal, undo button,
+U shortcut, cancellation, divider sizing, small-window recovery, save/load and
+F2 mode restoration. Saved layouts are compared exactly. Dialog and completed
+canvas screenshots were inspected. The app exits cleanly.
+
+Native terminal integration uses Windows ConPTY. It exercises E/R/H/V/X/U,
+arrows/Home/End/Enter, editor and canvas resizing, B divider sizing, W/L save/load,
+undo reset after loading another layout, Classic isolation and restoration.
+
+Ubuntu integration uses the existing Python launcher in an actual Linux PTY.
+Raw output is captured before Windows console interpretation. It exercises the
+same editing workflow, save/load, Classic restoration and resizing at 209x54,
+45x12, 121x30 and 240x64. Parsed output verifies every cell of the custom pane
+borders and the pane headers at every size. Ctrl+C exits cleanly and restores
+the exact previous Ubuntu tty settings. The installed alias is also checked.
+
+The core Scene.cs random layout engine, original widget implementations,
+monitoring collectors and Ubuntu launcher are unchanged from version 1.8.1.
+The editor shares one state/controller across the two native frontends and uses
+the existing layout formats, so it does not migrate or rewrite user profiles.
+
+The ZIP is extracted and every packaged file is byte-compared with the release
+tree. Installation backs up replaced program files and checks installed hashes.
+Existing user layouts are stored separately and are not overwritten.
+
+Hardware and platform limits: live testing used one Windows 11 machine and its
+Ubuntu distribution. Other Windows versions, GPU vendors and multi-GPU hardware
+were not available for live validation. Protected process data may be unavailable;
+sampling delays exclude the time Windows takes to collect counters and logs.

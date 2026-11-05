@@ -1,0 +1,51 @@
+name: Build and test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-2022
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Build and test both Windows targets
+        shell: pwsh
+        run: |
+          .\windows\source\build.ps1
+          .\windows\source\tests\check.ps1
+          .\windows\source\build.ps1 -Terminal
+          .\windows\source\tests\check.ps1 -Terminal
+
+  linux:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: linux
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
+        with:
+          dotnet-version: '10.0.x'
+      - name: Install terminal test dependency
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends python3-pyte
+      - name: Build and test the Linux application
+        run: |
+          dotnet build -c Release
+          dotnet run -c Release --project tests/Checks.csproj
+          /usr/bin/python3 tests/terminal.py ./bin/Release/net10.0/technobabble
+          python3 package.py ./dist
+      - name: Check the optional Windows bridge key decoder
+        run: /usr/bin/python3 -B ../windows/source/tests/wsl-keys.py
