@@ -2,6 +2,8 @@
 
 Making your terminal look like it's doing something important.
 
+Technobabble turns your terminal into an animated wall of diagnostics. Classic Mode reshuffles the panes. In Studio Mode, choose and save your own mix of live system monitors and fictional instruments.
+
 ## Download v1.13
 
 - **[Download for Debian or Ubuntu (64-bit)](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb)** · [Install the .deb](#debian-and-ubuntu-deb) · [Package checksum](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb.sha256)
@@ -9,6 +11,8 @@ Making your terminal look like it's doing something important.
 - **[Download for Linux (portable x86-64 binary, .tar.gz)](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble-1.13.0-linux-x64.tar.gz)** · [Portable checksum](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble-1.13.0-linux-x64.tar.gz.sha256)
 - [Download the Linux source archive (.tar.gz)](https://github.com/lordtempis/technobabble/releases/download/v1.13/Technobabble-Linux-1.13.0-source.tar.gz)
 - [Original v1.13 checksums for the Windows ZIP and Linux source](https://github.com/lordtempis/technobabble/releases/download/v1.13/v1.13-SHA256SUMS)
+
+Windows includes a desktop app and a terminal app. The native x86-64 Linux app runs on Debian, Ubuntu (including WSL 2), and compatible glibc distributions. [Watch 27 seconds of Relay Watch](docs/images/relay-watch-demo.gif) or [see the screenshot](#classic-and-studio-modes).
 
 ## Quick install
 
@@ -20,7 +24,7 @@ On 64-bit Intel/AMD Debian or Ubuntu, including Ubuntu under WSL, [download the 
 sudo apt install ./technobabble_1.13.0-2_amd64.deb
 ```
 
-The package includes .NET. Run `technobabble` for Classic or `technobabble --layout "Relay Watch"` for Studio. To uninstall, run `sudo apt remove technobabble`.
+The package includes .NET. Run `technobabble` for Classic or `technobabble --layout "Relay Watch"` for Studio. Press **Q** to quit. To uninstall, run `sudo apt remove technobabble`.
 
 <a name="debian-and-ubuntu-apt"></a>
 
@@ -42,13 +46,13 @@ The archive key fingerprint is `A533 F774 E961 CCB6 FDA0 0A90 B588 F42F 73E5 1C2
 
 ### Windows
 
-Download the Windows ZIP above and choose **Extract All**. In the extracted folder, double-click `Technobabble.exe` to open Classic Mode in a desktop window. To open Relay Watch in Studio Mode, run this command in PowerShell from that same folder.
+Download the Windows ZIP above and choose **Extract All**. In the extracted folder, double-click `Technobabble.exe` to open Classic Mode in a desktop window. For Studio in your terminal, open a PowerShell tab in Windows Terminal, switch to the extracted folder, and run:
 
 ```powershell
 .\Technobabble-Terminal.exe --layout "Relay Watch"
 ```
 
-Both executables use Windows performance counters. They were tested on Windows 11 with .NET Framework 4.8.
+Both executables use Windows performance counters. They were tested on Windows 11 with .NET Framework 4.8. Press **Q** to quit the terminal app or close the desktop window to exit.
 
 ### Linux (portable)
 
@@ -64,8 +68,6 @@ cd technobabble-1.13.0-linux-x64
 Use `./technobabble` for Classic Mode. Keep the extracted folder together. Alpine (musl) and ARM machines require a different build.
 
 ## Classic and Studio modes
-
-Technobabble turns a terminal into a wall of animated diagnostics. Classic Mode builds a random arrangement of panes and periodically reshuffles it. Studio Mode lets you choose, resize, pin, and save your own panes.
 
 Launch either edition without switches for Classic Mode. Try `--layout "System Watch"` for live monitoring or `--layout "Blank Canvas"` to build a dashboard from one pane.
 

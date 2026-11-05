@@ -16,13 +16,26 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: Build and test both Windows targets
+      - name: Package and test the Windows download
         shell: pwsh
         run: |
-          .\windows\source\build.ps1
-          .\windows\source\tests\check.ps1
-          .\windows\source\build.ps1 -Terminal
-          .\windows\source\tests\check.ps1 -Terminal
+          .\windows\package.ps1
+          $package = Get-Item .\windows\dist\Technobabble-*.zip
+          $extracted = Join-Path $env:RUNNER_TEMP 'Technobabble release'
+          Expand-Archive -LiteralPath $package.FullName -DestinationPath $extracted
+          & (Join-Path $extracted 'source/tests/check.ps1')
+          & (Join-Path $extracted 'source/tests/check.ps1') -Terminal
+          $hash = (Get-FileHash -Algorithm SHA256 -LiteralPath $package.FullName).Hash.ToLowerInvariant()
+          "$hash  $($package.Name)" | Set-Content -Encoding ascii -LiteralPath "$($package.FullName).sha256"
+      - name: Save the tested Windows ZIP and checksum
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: technobabble-windows
+          path: |
+            windows/dist/Technobabble-*.zip
+            windows/dist/Technobabble-*.zip.sha256
+          if-no-files-found: error
+          compression-level: 0
 
   linux:
     runs-on: ubuntu-24.04
@@ -53,6 +66,23 @@ jobs:
         run: |
           python3 package-portable.py ./dist
           python3 package.py ./dist/apt --portable ./dist/technobabble-*-linux-x64.tar.gz
+      - name: Archive and build the Linux source download
+        run: |
+          version=$(dotnet msbuild Technobabble.csproj -nologo -getProperty:Version)
+          archive="Technobabble-Linux-$version-source.tar.gz"
+          git -C .. archive --format=tar.gz --prefix="technobabble-linux-$version/" -o "$PWD/dist/$archive" HEAD:linux
+          (cd dist && sha256sum "$archive" > "$archive.sha256")
+          tar -xzf "dist/$archive" -C "$RUNNER_TEMP"
+          dotnet build "$RUNNER_TEMP/technobabble-linux-$version/Technobabble.csproj" -c Release
+      - name: Save the Linux source and checksum
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: technobabble-linux-source
+          path: |
+            linux/dist/*-source.tar.gz
+            linux/dist/*-source.tar.gz.sha256
+          if-no-files-found: error
+          compression-level: 0
       - name: Run the extracted archive on Debian 13 without system .NET
         run: |
           docker run --rm --volume "$PWD:/src:ro" debian:13-slim sh -eu -c '
@@ -82,6 +112,15 @@ jobs:
           for image in debian:13-slim ubuntu:24.04; do
             docker run --rm --volume "$PWD:/src:ro" "$image" sh /src/tests/apt-install.sh local
           done
+      - name: Save the tested Debian package and checksum
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: technobabble-deb-amd64
+          path: |
+            linux/dist/apt/*.deb
+            linux/dist/apt/*.deb.sha256
+          if-no-files-found: error
+          compression-level: 0
       - name: Build the revision 1 upgrade fixture from the v1.13 tag
         if: github.event_name == 'workflow_dispatch'
         run: |

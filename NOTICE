@@ -20,3 +20,5 @@ FIGlet Standard font
   https://github.com/cmatsuoka/figlet/blob/master/fonts/standard.flf
   Each edition includes the unmodified font, its additional contributor
   credits, and its permission notice in source/assets/standard.flf.
+  The FIGlet distribution's BSD 3-Clause copyright, conditions and disclaimer
+  are reproduced in windows/NOTICE.txt and linux/NOTICE.txt.

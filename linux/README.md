@@ -6,13 +6,12 @@ Technobabble is a Linux terminal application with Classic and Studio modes. It h
 
 ### Debian and Ubuntu with APT (amd64)
 
-The project APT repository provides Technobabble with .NET bundled. On 64-bit Intel/AMD Debian or Ubuntu, including Ubuntu under WSL, follow the [one-time repository setup](https://github.com/lordtempis/technobabble#debian-and-ubuntu-apt). Then install and launch:
+On 64-bit Intel/AMD Debian or Ubuntu, including Ubuntu under WSL, [download the .deb](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb). In the download folder, run:
 
-    sudo apt update
-    sudo apt install technobabble
+    sudo apt install ./technobabble_1.13.0-2_amd64.deb
     technobabble --layout "Relay Watch"
 
-Future published versions are installed by `sudo apt upgrade`. Remove the app with `sudo apt remove technobabble`. For a one-time install, download `technobabble_1.13.0-2_amd64.deb` from the [release](https://github.com/lordtempis/technobabble/releases/tag/v1.13) and run `sudo apt install ./technobabble_1.13.0-2_amd64.deb` in the download directory.
+The package includes .NET. The [optional APT repository](https://github.com/lordtempis/technobabble#debian-and-ubuntu-apt) lets you receive future versions with `sudo apt update` and `sudo apt upgrade`. Remove the app with `sudo apt remove technobabble`.
 
 ### Portable Linux archive (x86-64)
 
