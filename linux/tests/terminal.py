@@ -23,12 +23,17 @@ class Session:
             if pid_pipe is not None:
                 os.close(pid_pipe[0])
                 os.tcsetpgrp(0,os.getpgrp())
+                fcntl.ioctl(0,termios.FIONREAD,bytes(4))
                 shell_modes=termios.tcgetattr(0)
                 child=os.fork()
                 if child:
                     os.write(pid_pipe[1],str(child).encode())
                     os.close(pid_pipe[1])
                     status=os.waitpid(child,0)[1]
+                    # XNU sets PENDIN when the app restores canonical mode.
+                    # Checking queued input settles that transient kernel bit,
+                    # so all terminal settings can be compared exactly.
+                    fcntl.ioctl(0,termios.FIONREAD,bytes(4))
                     actual=termios.tcgetattr(0)
                     if actual!=shell_modes:
                         diff=[(i,a,b) for i,(a,b) in enumerate(zip(shell_modes,actual)) if a!=b]
