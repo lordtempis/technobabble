@@ -43,6 +43,8 @@ Open [macOS Tahoe 26 compatibility](https://github.com/lordtempis/technobabble/a
 
 Look for a green check next to **Apple silicon (ARM64)** and **Intel (x64)**. Each runner verifies its OS and CPU, builds and installs a self-contained package, then tests the shared Studio features and launches the installed app in a terminal. A successful job uploads its own `.pkg` and SHA-256 checksum under **Artifacts** on the run summary. These are unsigned, unnotarized preview installers. For a failed job, open its first red step or download its diagnostics artifact if the runner started.
 
+The `osx-arm64` and `osx-x64` labels inside installer filenames are .NET identifiers for modern macOS. If GitHub cancels Apple silicon while waiting for a runner, **Re-run failed jobs** retries the native test. The Intel job also checks that it can build ARM64 binaries. Only the Apple silicon job runs them.
+
 ## Publish an APT update
 
 Build the bundled `.deb` with a higher Debian version than the last published package. Test it with APT on Debian and Ubuntu before distributing it. The repository keeps each version's bytes under an immutable filename.
