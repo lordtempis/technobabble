@@ -1,0 +1,37 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Acquire-By-Hash: yes
+Architectures: amd64
+Codename: stable
+Components: main
+Date: Thu, 05 Nov 2026 08:00:09 +0000
+Label: Technobabble
+Origin: Technobabble
+Suite: stable
+MD5Sum:
+ 7c9a91d4fe17c8f03ce1e64ea6222ce7              977 main/binary-amd64/Packages
+ 435cba2d079023f23218a30b0475194e              640 main/binary-amd64/Packages.gz
+SHA1:
+ 4f8d729b4e04468344e1b491b7d9e9e357e6e88b              977 main/binary-amd64/Packages
+ 32bae0713ee52830b63a592d59c50e26a343cf30              640 main/binary-amd64/Packages.gz
+SHA256:
+ a98e23bbe33b12ff0a86ab5b5c85ce20112b3efe72eac85b04950926989c7d67              977 main/binary-amd64/Packages
+ 336b95127c3aa52a941dc3597cfdd9c3ec0888c1b4b9deb2cd4970f95bbcc76f              640 main/binary-amd64/Packages.gz
+SHA512:
+ 63471aa4e01d007be96a7e0c30b1f9b98369f032f3535e33d1df3437eb9aa8a08e06e280c5987fc62a85498c58e6f6440c1b6b34e689d2c64c3560bd8e39900c              977 main/binary-amd64/Packages
+ 431df49da9c1d7a9b0b9e620497be92b51016d6760183f727e105236e083d9ed747151276c1d66014900f8ce6fc15a447442e61a016132f5d07435d841537b75              640 main/binary-amd64/Packages.gz
+-----BEGIN PGP SIGNATURE-----
+
+iQGzBAEBCAAdFiEEpTP3dOlhzLb9oAqQtYj0L3PlHC0FAmrsN4kACgkQtYj0L3Pl
+HC2DOwv+JhKIkMcRiyC7WZDbL2ezGzcJP6T64NdKuBmPuHZpyOVQ+WRbS1Frxmin
+uR0uGEHMABUo5+nXMd5q1mrlDDUP/rEqxTiBmizjXHe5+8Dn7EEHJqHrQFLLQTfx
+y8I5tFemurB8920IeWVoONU1YpXDRP2KU0QtigrMxvAKhHhphJMzt6XCclHDXh81
+kVNoCT0VzFdbPNTNXCQht8fhPs6hQA9fgiTmzsz/yCwyTf8sDmt94FXoUG1gdU9o
+Ba8kZh2wzs2KZIefvnGSYXmDqI1qWAHbyPx/yJcz7kfZQOuqiWPrYLozJFnofGz4
+6zZwdtvTAAYR7JmVLghNViwEtr1PFVZNTJMXV/LEYAPztoOdvT0HJGyWXYSqNz3R
+kqyc/pzhqfwS6/12GOPtYGFOUCPfgPVxcdONKNicGkqkwZeKl24rQ7EAtN0Kbenr
+OC3i5vrR/qu49CAdUvIJwrgos7e2jeRiR2EGmrRGO06cKaAqt+PZKZDFZBXl9s3w
+ou4FgVjp
+=XsAT
+-----END PGP SIGNATURE-----
