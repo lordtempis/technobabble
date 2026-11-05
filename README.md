@@ -1,5 +1,7 @@
 # Technobabble
 
+Making your terminal look like it's doing something important.
+
 Technobabble turns a terminal into a wall of animated diagnostics. Classic Mode builds a random arrangement of panes and periodically reshuffles it. Studio Mode lets you choose, resize, pin, and save your own panes.
 
 Some panes show real system activity. Others tell a fictional story. In **Relay Watch**, radar detects a contact, a signal decoder receives its request, and engineering repairs the fault. All three follow the same incident even if you add a pane halfway through.
