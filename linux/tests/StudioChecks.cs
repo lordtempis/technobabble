@@ -61,7 +61,50 @@ internal static partial class Checks {
         Check(next.NetworkReady && next.NicId=="b" && next.Rx==100,"Connected adapter recovery failed");
         Console.WriteLine("Network adapter selection, independent rates, disconnect/reconnect, missing adapters and counter resets passed.");
     }
+    static void CheckTransferCycle(Machine host, Pictures images) {
+        var widget = new Widget(Array.IndexOf(Widget.Names, "pv"), 71, host, images, 0);
+        var names = new System.Collections.Generic.HashSet<string>();
+        var sizes = new System.Collections.Generic.HashSet<string>();
+        string lastName = null;
+        int lastPercent = 0;
+        bool wrapped = false;
+        for (int tick = 0; tick < 250; tick++) {
+            double now = tick * 0.5;
+            Grid frame = widget.Frame(72, 12, now);
+            Check(new string(frame.Ch[0]).Trim() == "pv | simulated transfers", "pv used the old single-stream renderer");
+            string name = new string(frame.Ch[1]).Trim();
+            string counts = new string(frame.Ch[2]).Trim();
+            int percent = Int32.Parse(counts.Substring(0, counts.IndexOf('%')));
+            string size = counts.Split('/')[1].Trim();
+            if (name != lastName) {
+                Check(lastName == null || lastPercent == 100, "Transfer rotated before completion");
+                Check(percent == 0, "New file did not start at zero");
+                if (!names.Add(name)) {
+                    Check(names.Count == 12 && sizes.Count == 12, "File name or size repeated early");
+                    wrapped = true;
+                    break;
+                }
+                sizes.Add(size);
+            } else Check(percent >= lastPercent, "Transfer progress went backwards");
+            lastName = name;
+            lastPercent = percent;
+            Check(new string(widget.Frame(24, 2, now).Ch[0]).Trim() == name, "Resizing advanced the file");
+            Check(new string(widget.Frame(24, 2, now).Ch[1]).Contains(size), "Compact pane lost total size");
+        }
+        Check(wrapped, "Transfer queue did not wrap");
+    }
+    static void TransferModes(Machine host, Pictures images) {
+        bool previousMode = host.StudioActive;
+        try {
+            foreach (bool studio in new[] { false, true }) {
+                host.StudioActive = studio;
+                CheckTransferCycle(host, images);
+            }
+            Console.WriteLine("pv: 12 distinct files and sizes, completion, rollover, and resize passed in Classic and Studio.");
+        } finally { host.StudioActive = previousMode; }
+    }
     static void StudioUpgrades(Machine host,Pictures images){
+        TransferModes(host, images);
         ProcessChecks();NetworkChecks();ModeRestoration(host,images);
         var dir=Path.Combine(Path.GetTempPath(),"studio18-"+Guid.NewGuid().ToString("N"));
         var store=new LayoutStore(dir);var scene=new Scene(20,10,new Random(81),host,images);var board=new Studio(scene,store);

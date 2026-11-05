@@ -43,7 +43,7 @@ namespace Technobabble {
                 playlistSeconds += file.Seconds + 1; // Hold the completed file for one second.
         }
 
-        void DrawStudioTransfer(Grid grid, double elapsed) {
+        void DrawTransfer(Grid grid, double elapsed) {
             if (transferFiles == null) CreateTransferPlaylist();
             // Derive position from scene time so pausing, repainting or resizing
             // never advances a file. Only simulated names and sizes are used.

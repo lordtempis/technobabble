@@ -78,26 +78,6 @@ namespace Technobabble {
             }
             g.Put(0,top+height-1,new string('─',g.W),Ink.Gray);
         }
-        readonly byte[] block=new byte[65536];
-        long transferred;
-        int pass=-1;
-        void Transfer(Grid g,double elapsed){
-            int cycle=(int)(elapsed/11);double t=elapsed-11*cycle;
-            if(pass!=cycle){pass=cycle;transferred=0;}
-            long goal=Math.Min(10485760,(long)(t*1048576));
-            if(transferred<goal){
-                using(var rng=RandomNumberGenerator.Create()){
-                    while(transferred<goal){rng.GetBytes(block);transferred+=Math.Min(block.Length,goal-transferred);}
-                }
-            }
-            int w=Math.Max(2,g.W-36);int n=(int)(w*transferred/10485760);
-            string line=String.Format("{0,9} 0:00:{1:00} [1.0 MiB/s] [",Size(transferred),(int)Math.Min(10,t))+
-                new string('=',Math.Max(0,n-1))+(n>0?">":"")+new string(' ',w-n)+"] "+(transferred*100/10485760)+"%";
-            int y=Math.Min(g.H-1,cycle);
-            for(int i=0;i<y;i++)g.Put(0,i," 10.0 MiB 0:00:10 [1.0 MiB/s] ["+new string('=',w)+"] 100%",Ink.White);
-            if(g.W<38){g.Put(0,y,String.Format("{0:0.0} MiB  {1}%",transferred/1048576.0,transferred*100/10485760),Ink.White);}
-            else g.Put(0,y,line,Ink.White);
-        }
         string[] keyLines;
         int keyTick=-1;
         // RFC 5656 uncompressed nistp256 public key, hashed as an OpenSSH wire blob.

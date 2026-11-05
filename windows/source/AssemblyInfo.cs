@@ -6,8 +6,8 @@ using System.Runtime.CompilerServices;
 #else
 [assembly: AssemblyTitle("Technobabble")]
 #endif
-[assembly: AssemblyVersion("1.13.1.0")]
-[assembly: AssemblyFileVersion("1.13.1.0")]
+[assembly: AssemblyVersion("1.13.2.0")]
+[assembly: AssemblyFileVersion("1.13.2.0")]
 [assembly: AssemblyDescription("A native Windows recreation of Dustin Kirkland's Hollywood")]
 [assembly: AssemblyProduct("Technobabble")]
 [assembly: InternalsVisibleTo("Technobabble.Tests")]

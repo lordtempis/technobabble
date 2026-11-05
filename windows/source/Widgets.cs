@@ -21,7 +21,7 @@ namespace Technobabble {
         int last=-1;
         Grid cached;
         RelayFrame lastRelay;
-        bool cachedStudioContent;
+        bool cachedStudioCode;
         CodeStyle cachedCodeStyle;
         StudioCodeStream studioCode;
         public string Name { get{return Names[kind];} }
@@ -75,18 +75,18 @@ namespace Technobabble {
             if(Name=="process"){host.RequestProcesses();var processGrid=new Grid(w,h);ProcessPane(processGrid);return processGrid;}
             double age=Math.Max(0,now-birth);
             int t=(int)(age/Intervals[kind]);
-            bool studioContent=host.StudioActive && (Name=="pv" || Name=="code");
-            if(!studioContent || Name!="code")codeStyle=CodeStyle.Scroll;
+            bool studioCodeActive=host.StudioActive && Name=="code";
+            if(!studioCodeActive)codeStyle=CodeStyle.Scroll;
             int frameTick=codeStyle==CodeStyle.Scroll?t:(int)(age/.04);
-            if(cached!=null && cached.W==w && cached.H==h && last==frameTick && cachedStudioContent==studioContent && cachedCodeStyle==codeStyle)return cached;
-            bool flow=(Name=="code" && !studioContent)||Name=="logs"||Name=="tree"||Name=="stat"||Name=="hexdump"||Name=="errno"||Name=="man";
+            if(cached!=null && cached.W==w && cached.H==h && last==frameTick && cachedStudioCode==studioCodeActive && cachedCodeStyle==codeStyle)return cached;
+            bool flow=(Name=="code" && !studioCodeActive)||Name=="logs"||Name=="tree"||Name=="stat"||Name=="hexdump"||Name=="errno"||Name=="man";
             Grid g=new Grid(flow?Math.Max(100,w):w,h);
             switch(Name){
                 case "apg": Passwords(g,t);break;
                 case "atop": case "htop": Processes(g,Name=="htop");break;
                 case "bat": Source(g,t,true);break;
                 case "code":
-                    if(studioContent){
+                    if(studioCodeActive){
                         if(studioCode==null)studioCode=new StudioCodeStream(seed);
                         studioCode.Draw(g,t,age,codeStyle);
                     }else Source(g,t,false);
@@ -99,18 +99,14 @@ namespace Technobabble {
                 case "jp2a": case "map": case "mplayer": Picture(g,t);break;
                 case "logs": Logs(g,t);break;
                 case "man": Manual(g,t);break;
-                case "pv":
-                    double elapsed=Math.Max(0,now-birth);
-                    if(studioContent)DrawStudioTransfer(g,elapsed);
-                    else Transfer(g,elapsed);
-                    break;
+                case "pv": DrawTransfer(g,age);break;
                 case "sshart": Fingerprint(g,t);break;
                 case "stat": Stats(g,t);break;
                 case "tree": Tree(g,t);break;
                 case "disk": Disk(g,host.Latest.Disks,t);break;
                 case "gpu": Gpu(g,host.Latest.Gpus,t);break;
             }
-            cachedStudioContent=studioContent;
+            cachedStudioCode=studioCodeActive;
             cachedCodeStyle=codeStyle;
             cached=flow?g.Wrap(w,Name=="hexdump"||Name=="logs"||Name=="stat"):g;last=frameTick;return cached;
         }

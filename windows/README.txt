@@ -1,4 +1,4 @@
-TECHNOBABBLE 1.13.1
+TECHNOBABBLE 1.13.2
 =========================
 
 Technobabble is an independent native Windows recreation of Dustin Kirkland's
@@ -313,10 +313,9 @@ Original widgets
   map           The original Hollywood world map converted to colored text.
   mplayer       The original soundwave clip, sampled into an embedded frame
                 atlas and replayed as fast, silent colored ASCII animation.
-  pv            Classic repeats a 10 MiB data stream at 1 MiB/s. In Studio, pv
-                simulates transfers of 12 named files with different sizes and
-                shows progress and completed files. All transfers are simulated
-                in memory. Select pv in the Studio pane editor with E.
+  pv            Classic and Studio simulate transfers of 12 named files in a
+                shuffled order. Sizes and rates vary by file. Each reaches 100%
+                before the next begins. Select pv in the Studio pane editor with E.
   speedometer   Receive and transmit rate histories for an active interface.
   sshart        OpenSSH-style randomart from ephemeral Windows ECDSA P-256 keys.
   stat / tree   Metadata and bounded directory listings from Windows system paths.

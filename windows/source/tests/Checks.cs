@@ -135,52 +135,6 @@ internal static partial class Checks {
         var wave=new Widget(Array.IndexOf(Widget.Names,"mplayer"),23,host,images,0);
         Check(Contents(wave.Frame(80,24,1))!=Contents(wave.Frame(80,24,1.5)),"Wave animation stopped");
     }
-    static void TransferModes(Machine host, Pictures images) {
-        bool previousMode = host.StudioActive;
-        try {
-            var widget = new Widget(Array.IndexOf(Widget.Names, "pv"), 71, host, images, 0);
-            host.StudioActive = true;
-            var names = new System.Collections.Generic.HashSet<string>();
-            var sizes = new System.Collections.Generic.HashSet<string>();
-            string lastName = null;
-            int lastPercent = 0;
-            bool wrapped = false;
-            for (int tick = 0; tick < 250; tick++) {
-                double now = tick * 0.5;
-                Grid frame = widget.Frame(72, 12, now);
-                string name = new string(frame.Ch[1]).Trim();
-                string counts = new string(frame.Ch[2]).Trim();
-                int percent = Int32.Parse(counts.Substring(0, counts.IndexOf('%')));
-                string size = counts.Split('/')[1].Trim();
-                if (name != lastName) {
-                    Check(lastName == null || lastPercent == 100, "Transfer rotated before completion");
-                    Check(percent == 0, "New file did not start at zero");
-                    if (!names.Add(name)) {
-                        Check(names.Count == 12 && sizes.Count == 12, "File name or size repeated early");
-                        wrapped = true;
-                        break;
-                    }
-                    sizes.Add(size);
-                } else Check(percent >= lastPercent, "Transfer progress went backwards");
-                lastName = name;
-                lastPercent = percent;
-                Check(new string(widget.Frame(24, 2, now).Ch[0]).Trim() == name, "Resizing advanced the file");
-                Check(new string(widget.Frame(24, 2, now).Ch[1]).Contains(size), "Compact pane lost total size");
-            }
-            Check(wrapped, "Transfer queue did not wrap");
-            Grid studio = widget.Frame(72, 12, 10.5);
-            host.StudioActive = false;
-            Grid classic = widget.Frame(72, 12, 10.5);
-            // The released Classic renderer clips the final '%' at this width.
-            string legacyRow = " 10.0 MiB 0:00:10 [1.0 MiB/s] [" + new string('=', 35) + ">] 100";
-            Check(new string(classic.Ch[0]) == legacyRow,
-                "Classic pv did not render its original completed pass");
-            host.StudioActive = true;
-            Check(Contents(widget.Frame(72, 12, 10.5)) == Contents(studio),
-                "Switching mode at the same tick reused the other pv display");
-            Console.WriteLine("pv: 12 distinct files and sizes, completion, rollover, resizing, and Classic parity passed.");
-        } finally { host.StudioActive = previousMode; }
-    }
 #if TERMINAL
     static void TerminalViews(Machine host,Pictures images){
         var input=new StreamInput(new StringReader("SIZE 209 54\nSIZE 0 9\nSIZE 2001 54\nKEY 9 2 9\nKEY 76 4 12\nKEY 999 0 1\nKEY 116 0 0\n"));
@@ -444,7 +398,6 @@ internal static partial class Checks {
                     machine.Latest.ProcessCount,machine.Latest.TotalMB,machine.Latest.Nic,machine.Latest.Logs.Length);
                 Check(machine.Latest.ProcessCount>0 && machine.Latest.TotalMB>0,"Live Windows sample unavailable");
                 Scenes(machine,images);Widgets(machine,images);Layouts(machine,images);SystemWatch(machine,images);DiskTests(machine,images);GpuTests(machine,images);GpuMemoryTests();RefreshSettings(machine,images);StudioUpgrades(machine,images);PaneEditorChecks(machine,images);
-                TransferModes(machine, images);
                 CodeScrollChecks(machine, images);
                 CodeTypingChecks(machine, images);
                 RenameCompatibility(machine, images);

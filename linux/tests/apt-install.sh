@@ -32,8 +32,8 @@ case "$mode" in
         apt-get update
         apt-cache policy technobabble
         if [ "$mode" = upgrade-bundled ]; then
-            apt install -y technobabble=1.13.1-2
-            test "$(dpkg-query -W -f='${Version}' technobabble)" = 1.13.1-2
+            apt install -y technobabble=1.13.1-3
+            test "$(dpkg-query -W -f='${Version}' technobabble)" = 1.13.1-3
         fi
         if [ "$mode" != public ]; then
             apt upgrade -y
