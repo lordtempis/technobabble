@@ -2,15 +2,14 @@
 
 Making your terminal look like it's doing something important.
 
-Technobabble turns a terminal into a wall of animated diagnostics. Classic Mode builds a random arrangement of panes and periodically reshuffles it. Studio Mode lets you choose, resize, pin, and save your own panes.
-
-Some panes show real system activity. Others tell a fictional story. In **Relay Watch**, radar detects a contact, a signal decoder receives its request, and engineering repairs the fault. All three follow the same incident even if you add a pane halfway through.
-
-![Relay Watch showing the radar contact Relay 07, its decoded auxiliary power request, and the engineering bus voltage recovering](docs/images/relay-watch.png)
-
 ## Download v1.13
 
-[Windows ZIP](https://github.com/lordtempis/technobabble/releases/download/v1.13/Technobabble-1.13.zip) · [Ubuntu package (amd64)](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-1_amd64.deb) · [Linux source archive](https://github.com/lordtempis/technobabble/releases/download/v1.13/Technobabble-Linux-1.13.0-source.tar.gz) · [SHA-256 checksums](https://github.com/lordtempis/technobabble/releases/download/v1.13/v1.13-SHA256SUMS)
+- **[Download for Windows (ZIP)](https://github.com/lordtempis/technobabble/releases/download/v1.13/Technobabble-1.13.zip)**
+- **[Download for Ubuntu under WSL 2 (.deb, amd64)](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-1_amd64.deb)**
+- [Download the Linux source archive (.tar.gz)](https://github.com/lordtempis/technobabble/releases/download/v1.13/Technobabble-Linux-1.13.0-source.tar.gz)
+- [Download the SHA-256 checksums](https://github.com/lordtempis/technobabble/releases/download/v1.13/v1.13-SHA256SUMS)
+
+## Quick install
 
 ### Windows
 
@@ -35,7 +34,15 @@ technobabble --layout "Relay Watch"
 
 If APT on an older Ubuntu release cannot find `dotnet-runtime-10.0`, follow the [.NET setup instructions for your Ubuntu version](https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu-install), then rerun the package install command.
 
+## Classic and Studio modes
+
+Technobabble turns a terminal into a wall of animated diagnostics. Classic Mode builds a random arrangement of panes and periodically reshuffles it. Studio Mode lets you choose, resize, pin, and save your own panes.
+
 Launch either edition without switches for Classic Mode. Try `--layout "System Watch"` for live monitoring or `--layout "Blank Canvas"` to build a dashboard from one pane.
+
+Some panes show real system activity. Others tell a fictional story. In **Relay Watch**, radar detects a contact, a signal decoder receives its request, and engineering repairs the fault. All three follow the same incident even if you add a pane halfway through.
+
+![Relay Watch showing the radar contact Relay 07, its decoded auxiliary power request, and the engineering bus voltage recovering](docs/images/relay-watch.png)
 
 ## Terminal controls
 
