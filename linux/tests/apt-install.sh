@@ -49,9 +49,12 @@ if [ "$mode" != upgrade ] && command -v dotnet; then echo "Unexpected system .NE
 dpkg-query -S /usr/bin/technobabble /usr/bin/technobabble-terminal
 technobabble --version
 technobabble-terminal --version
+# Ubuntu's minimized image diverts /usr/bin/man to a message even after
+# installing man-db. Use the reader that dpkg actually installed.
+reader=$(dpkg-divert --truename /usr/bin/man)
 for name in technobabble technobabble-terminal; do
-    man -w 1 "$name"
-    MANPAGER=cat man 1 "$name" | col -bx > "/tmp/$name.manual"
+    "$reader" -w 1 "$name"
+    MANPAGER=cat "$reader" 1 "$name" | col -bx > "/tmp/$name.manual"
     grep -Fq TECHNOBABBLE_LAYOUT_DIR "/tmp/$name.manual"
 done
 python3 /src/tests/terminal.py /usr/bin/technobabble
