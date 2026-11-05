@@ -59,6 +59,9 @@ with tempfile.TemporaryDirectory() as tmp:
     with launch("--layout","Process Watch","--refresh","1") as s:
         s.key(b"f"); s.key(b"technobabble\r",2.0)
         assert "Filter: technobabble" in s.body and str(s.pid) in s.body, s.screen.display
+    with launch("--layout","Network Watch","--refresh","1") as s:
+        s.take(2.5)
+        assert "speedometer" in s.body and "RX " in s.body and "TX " in s.body,s.screen.display
     with launch("--layout","Disk Watch","--refresh","1") as s:
         s.take(2.2)
         assert "macOS storage devices" in s.body and ("/s" in s.body or "unavailable" in s.body),s.screen.display

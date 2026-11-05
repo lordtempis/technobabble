@@ -16,21 +16,29 @@ class Session:
         pid_pipe=os.pipe() if sys.platform=="darwin" else None
         self.leader=os.fork()
         if self.leader==0:
+            diagnostics=os.dup(2) if pid_pipe is not None else None
             os.close(self.master);os.setsid();fcntl.ioctl(self.slave,termios.TIOCSCTTY,0)
             for fd in (0,1,2):os.dup2(self.slave,fd)
             if self.slave>2:os.close(self.slave)
             if pid_pipe is not None:
                 os.close(pid_pipe[0])
+                os.tcsetpgrp(0,os.getpgrp())
+                shell_modes=termios.tcgetattr(0)
                 child=os.fork()
                 if child:
                     os.write(pid_pipe[1],str(child).encode())
                     os.close(pid_pipe[1])
                     status=os.waitpid(child,0)[1]
-                    if termios.tcgetattr(0)!=self.original:
-                        os.write(2,b"Application did not restore terminal modes\n")
-                        os._exit(1)
+                    actual=termios.tcgetattr(0)
+                    if actual!=shell_modes:
+                        diff=[(i,a,b) for i,(a,b) in enumerate(zip(shell_modes,actual)) if a!=b]
+                        os.write(diagnostics,f"Terminal mode differences: {diff}\n".encode())
+                        os._exit(74)
+                    if status:
+                        os.write(diagnostics,f"Application wait status: {status}\n".encode())
                     os._exit(os.waitstatus_to_exitcode(status) % 256)
                 os.close(pid_pipe[1])
+                os.close(diagnostics)
             env=dict(os.environ,TERM='xterm-256color',PATH='/usr/bin:/bin',XDG_DATA_HOME=data)
             for key in ('TECHNOBABBLE_LAYOUT_DIR','HOLLYWOOD_LAYOUT_DIR','WSL_INTEROP','WSLENV'):env.pop(key,None)
             if layout_dir is not None:env['TECHNOBABBLE_LAYOUT_DIR']=str(layout_dir)
