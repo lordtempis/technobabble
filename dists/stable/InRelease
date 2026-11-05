@@ -5,33 +5,33 @@ Acquire-By-Hash: yes
 Architectures: amd64
 Codename: stable
 Components: main
-Date: Thu, 05 Nov 2026 08:00:09 +0000
+Date: Thu, 05 Nov 2026 09:24:52 +0000
 Label: Technobabble
 Origin: Technobabble
 Suite: stable
 MD5Sum:
- 7c9a91d4fe17c8f03ce1e64ea6222ce7              977 main/binary-amd64/Packages
- 435cba2d079023f23218a30b0475194e              640 main/binary-amd64/Packages.gz
+ 80256aec8eb4e7c01aeb1c893f6150db             1954 main/binary-amd64/Packages
+ c563705413a56424b76b5d57b48333e7              841 main/binary-amd64/Packages.gz
 SHA1:
- 4f8d729b4e04468344e1b491b7d9e9e357e6e88b              977 main/binary-amd64/Packages
- 32bae0713ee52830b63a592d59c50e26a343cf30              640 main/binary-amd64/Packages.gz
+ 30fa87d84d21b8ac2dc8cd0bab11f40e1bfa8965             1954 main/binary-amd64/Packages
+ 87d993f96835bf1574c8abdd81b1cb8e694727a8              841 main/binary-amd64/Packages.gz
 SHA256:
- a98e23bbe33b12ff0a86ab5b5c85ce20112b3efe72eac85b04950926989c7d67              977 main/binary-amd64/Packages
- 336b95127c3aa52a941dc3597cfdd9c3ec0888c1b4b9deb2cd4970f95bbcc76f              640 main/binary-amd64/Packages.gz
+ 5cedfdccd005c5147f56455b8ef701d4a56ecc07ae4fc6fe235387c216313c6f             1954 main/binary-amd64/Packages
+ aa7750f6c9ca3cd62e1e31ab4029d017dd3f4f52a841b24cc19acf7c74cd93be              841 main/binary-amd64/Packages.gz
 SHA512:
- 63471aa4e01d007be96a7e0c30b1f9b98369f032f3535e33d1df3437eb9aa8a08e06e280c5987fc62a85498c58e6f6440c1b6b34e689d2c64c3560bd8e39900c              977 main/binary-amd64/Packages
- 431df49da9c1d7a9b0b9e620497be92b51016d6760183f727e105236e083d9ed747151276c1d66014900f8ce6fc15a447442e61a016132f5d07435d841537b75              640 main/binary-amd64/Packages.gz
+ 24802a34235b972e934c852fa98a2a65dc9a3590b8460f8f4d444ebc1ba2c75a3fd293383ae04f4bb66bb7225c46a5290c4139829fc66a3af0a789bd4492da19             1954 main/binary-amd64/Packages
+ 1107ed41a3bb106bc2709841965bdd26b851aa6baa81cb30bc1124866116b17d61340dd77bd0b63d7322fa758d98c2dcdfdc72018b220e0ac37cfaab4b739621              841 main/binary-amd64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQGzBAEBCAAdFiEEpTP3dOlhzLb9oAqQtYj0L3PlHC0FAmrsN4kACgkQtYj0L3Pl
-HC2DOwv+JhKIkMcRiyC7WZDbL2ezGzcJP6T64NdKuBmPuHZpyOVQ+WRbS1Frxmin
-uR0uGEHMABUo5+nXMd5q1mrlDDUP/rEqxTiBmizjXHe5+8Dn7EEHJqHrQFLLQTfx
-y8I5tFemurB8920IeWVoONU1YpXDRP2KU0QtigrMxvAKhHhphJMzt6XCclHDXh81
-kVNoCT0VzFdbPNTNXCQht8fhPs6hQA9fgiTmzsz/yCwyTf8sDmt94FXoUG1gdU9o
-Ba8kZh2wzs2KZIefvnGSYXmDqI1qWAHbyPx/yJcz7kfZQOuqiWPrYLozJFnofGz4
-6zZwdtvTAAYR7JmVLghNViwEtr1PFVZNTJMXV/LEYAPztoOdvT0HJGyWXYSqNz3R
-kqyc/pzhqfwS6/12GOPtYGFOUCPfgPVxcdONKNicGkqkwZeKl24rQ7EAtN0Kbenr
-OC3i5vrR/qu49CAdUvIJwrgos7e2jeRiR2EGmrRGO06cKaAqt+PZKZDFZBXl9s3w
-ou4FgVjp
-=XsAT
+iQGzBAEBCAAdFiEEpTP3dOlhzLb9oAqQtYj0L3PlHC0FAmrsS2QACgkQtYj0L3Pl
+HC2EAAwAuHIClpA7Kws5qUvL3QJJs1WXe6Vub9yHxxGtkI2dqV11Pghc2N5I6ISh
+/XjRGmbk10uosrpbbeOu1nhj4Rhu/LQHXIa2nE/Y8C1uThjvg4JhUPr9rQ6nCv0v
+dZRJOWPH3zC1Gmxzb1l7JGp0LWBP0YayX1F/MhlqvPLKE9Upd/typVgv6tx+ICEc
+50QxgfLkpIqHNfQ3THFy17vOLtbXWZXIXFSEz8a4UU6XjeN2nrHNG0Ab6w8+OWsv
+JmT31DZ4x2szVopPcjH3aRVyspCyMdq7/8d4w4I6jC6N+hJaS99OvO3Pz5zHPCa+
+7N1NgP9v21XhSjBC21tS3YH+HpGgcRepjkuQhaDaxDuaLbn9QhUcVL/szaiMpUSQ
+hJEOQwcaWclrH4yCzgmIx1KCmfzeYQTn2Frq4zbXPt0wPWb7Mb3SWWq/phyPYsov
+RafSQAl33WP/jKUsPOLjTzCNSfT4aJISP8N/cl9dZsgGcYY8nG8SvXvOVJeOrqfL
+9+01x/+U
+=pS3a
 -----END PGP SIGNATURE-----

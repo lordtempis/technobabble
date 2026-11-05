@@ -16,3 +16,21 @@ Description: Animated Linux terminal dashboards and cinematic monitoring panes
  Classic and Studio modes, live Linux system data, editable layouts and
  synchronized fictional Relay Watch incidents.
 
+Package: technobabble
+Architecture: amd64
+Version: 1.13.1-2
+Priority: optional
+Section: games
+Maintainer: Technobabble Project <project@technobabble.invalid>
+Depends: ca-certificates, libc6 (>= 2.27), libgcc-s1, libstdc++6, libgssapi-krb5-2, libicu78 | libicu76 | libicu74 | libicu72 | libicu70, libssl3t64 | libssl3, libbrotli1, tzdata, zlib1g
+Filename: pool/main/t/technobabble/technobabble_1.13.1-2_amd64.deb
+Size: 29612736
+MD5sum: 04068238bb766309fd20a5d9b034f6af
+SHA1: 7cc41f860eb907d0f07c9146de8e6f98c88bef73
+SHA256: c35fccdbbbf55c2d8083272de652359274fc8105cf830b20d4281a7ff305596c
+SHA512: e9cd56219abe0f9294a64955bf14e05cb978805bcf3b69bafd6d3ef0ff0adcccedce462c9a94eaf61a138897fa461391e3e3f94b8d42a1f3663220cd0469fcaf
+Homepage: https://github.com/lordtempis/technobabble
+Description: Animated Linux terminal dashboards and cinematic monitoring panes
+ Classic and Studio modes, live Linux system data, editable layouts and
+ synchronized fictional Relay Watch incidents.
+
