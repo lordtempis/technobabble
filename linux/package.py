@@ -46,7 +46,7 @@ def build(out, archive):
         for directory in (app.parent, commands, doc, metadata):
             directory.mkdir(parents=True)
         if archive:
-            arch, revision, depends = "amd64", "2", SYSTEM_LIBS
+            arch, revision, depends = "amd64", "3", SYSTEM_LIBS
             install_portable(archive, work, app, doc)
         else:
             arch = subprocess.check_output(["dpkg", "--print-architecture"], text=True).strip()

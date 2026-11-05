@@ -19,6 +19,8 @@ if [[ -e $target ]]; then cmp "$deb" "$target"; else install -m 0644 "$deb" "$ta
 
 tmp=$(mktemp -d)
 trap 'rm -rf -- "$tmp"' EXIT
+(cd "$(dirname "$target")" && sha256sum "${target##*/}") > "$tmp/package.sha256"
+install -m 0644 "$tmp/package.sha256" "$target.sha256"
 index=main/binary-amd64
 mkdir -p "$tmp/stable/$index"
 apt-ftparchive packages pool > "$tmp/stable/$index/Packages"
