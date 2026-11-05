@@ -6,8 +6,9 @@ using System.Threading;
 
 namespace Technobabble {
     internal static partial class LinuxProgram {
-        const string Usage = """
-            Technobabble for Linux 1.13
+        static readonly string Version = typeof(LinuxProgram).Assembly.GetName().Version.ToString(3);
+        static readonly string Usage = $"""
+            Technobabble for Linux {Version}
             technobabble [-s 1..20] [-d seconds] [--classic | --studio] [--layout NAME] [--refresh 1|2|5]
 
             Start in Classic, or try: technobabble --layout "Relay Watch"
@@ -22,7 +23,7 @@ namespace Technobabble {
             try {
                 var options = Options.Parse(args);
                 if (options.Help) { Console.WriteLine(Usage); return 0; }
-                if (options.Version) { Console.WriteLine("Technobabble 1.13.0 (Linux)"); return 0; }
+                if (options.Version) { Console.WriteLine($"Technobabble {Version} (Linux)"); return 0; }
                 if (!OperatingSystem.IsLinux()) { Console.Error.WriteLine("This edition runs on Linux."); return 2; }
                 if (Console.IsInputRedirected || Console.IsOutputRedirected) {
                     Console.Error.WriteLine("Open a Linux terminal to run Technobabble interactively."); return 2;

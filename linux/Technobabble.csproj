@@ -4,7 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>technobabble</AssemblyName>
     <RootNamespace>Technobabble</RootNamespace>
-    <Version>1.13.0</Version>
+    <Version>1.13.1</Version>
     <Product>Technobabble for Linux</Product>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <UseAppHost>true</UseAppHost>

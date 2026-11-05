@@ -1,4 +1,4 @@
-TECHNOBABBLE 1.13
+TECHNOBABBLE 1.13.1
 =========================
 
 Technobabble is an independent native Windows recreation of Dustin Kirkland's

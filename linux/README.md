@@ -6,9 +6,9 @@ Technobabble is a Linux terminal application with Classic and Studio modes. It h
 
 ### Debian and Ubuntu with APT (amd64)
 
-On 64-bit Intel/AMD Debian or Ubuntu, including Ubuntu under WSL, [download the .deb](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb). In the download folder, run:
+On 64-bit Intel/AMD Debian or Ubuntu, including Ubuntu under WSL, [download the .deb](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/technobabble_1.13.1-2_amd64.deb). In the download folder, run:
 
-    sudo apt install ./technobabble_1.13.0-2_amd64.deb
+    sudo apt install ./technobabble_1.13.1-2_amd64.deb
     technobabble --layout "Relay Watch"
 
 The package includes .NET. The [optional APT repository](https://github.com/lordtempis/technobabble#debian-and-ubuntu-apt) lets you receive future versions with `sudo apt update` and `sudo apt upgrade`. Remove the app with `sudo apt remove technobabble`.
@@ -17,11 +17,11 @@ The package includes .NET. The [optional APT repository](https://github.com/lord
 
 Use the binary archive on a glibc-based Linux distribution with its standard system libraries, including ICU and OpenSSL. It includes .NET 10 and runs from your own directory without an installer or administrator access. The target is Intel/AMD 64-bit Linux with glibc 2.27 or later. Alpine/musl and ARM use different runtime builds.
 
-Download the archive and its matching `.sha256` file from the [v1.13 release](https://github.com/lordtempis/technobabble/releases/tag/v1.13). In the download directory, run:
+Download the archive and its matching `.sha256` file from the [v1.13.1 release](https://github.com/lordtempis/technobabble/releases/tag/v1.13.1). In the download directory, run:
 
-    sha256sum -c technobabble-1.13.0-linux-x64.tar.gz.sha256
-    tar -xzf technobabble-1.13.0-linux-x64.tar.gz
-    cd technobabble-1.13.0-linux-x64
+    sha256sum -c technobabble-1.13.1-linux-x64.tar.gz.sha256
+    tar -xzf technobabble-1.13.1-linux-x64.tar.gz
+    cd technobabble-1.13.1-linux-x64
     ./technobabble --layout "Relay Watch"
 
 Launch `./technobabble` for Classic Mode. Keep the extracted directory together. The executable loads its runtime from `lib/` and the runtime's licenses are in `dotnet-notices/`.
@@ -49,7 +49,7 @@ Install the .NET 10 SDK in Ubuntu and run the following in the extracted source 
     python3 tests/terminal.py ./bin/Release/net10.0/technobabble
     python3 package.py ./dist
     python3 package-portable.py ./dist
-    python3 package.py ./dist --portable ./dist/technobabble-1.13.0-linux-x64.tar.gz
+    python3 package.py ./dist --portable ./dist/technobabble-1.13.1-linux-x64.tar.gz
 
 The terminal tests use Python's `pyte` library. Building the Ubuntu package uses `dpkg-deb`. The portable packager downloads the generic Linux runtime packs from NuGet when needed. Both packages include preconverted image resources.
 

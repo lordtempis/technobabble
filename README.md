@@ -4,13 +4,15 @@ Making your terminal look like it's doing something important.
 
 Technobabble turns your terminal into an animated wall of diagnostics. Classic Mode reshuffles the panes. In Studio Mode, choose and save your own mix of live system monitors and fictional instruments.
 
-## Download v1.13
+<a name="download-v113"></a>
 
-- **[Download for Debian or Ubuntu (64-bit)](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb)** · [Install the .deb](#debian-and-ubuntu-deb) · [Package checksum](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb.sha256)
-- **[Download for Windows (ZIP)](https://github.com/lordtempis/technobabble/releases/download/v1.13/Technobabble-1.13.zip)**
-- **[Download for Linux (portable x86-64 binary, .tar.gz)](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble-1.13.0-linux-x64.tar.gz)** · [Portable checksum](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble-1.13.0-linux-x64.tar.gz.sha256)
-- [Download the Linux source archive (.tar.gz)](https://github.com/lordtempis/technobabble/releases/download/v1.13/Technobabble-Linux-1.13.0-source.tar.gz)
-- [Original v1.13 checksums for the Windows ZIP and Linux source](https://github.com/lordtempis/technobabble/releases/download/v1.13/v1.13-SHA256SUMS)
+## Download v1.13.1
+
+- **[Download for Debian or Ubuntu (64-bit)](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/technobabble_1.13.1-2_amd64.deb)** · [Install the .deb](#debian-and-ubuntu-deb) · [Package checksum](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/technobabble_1.13.1-2_amd64.deb.sha256)
+- **[Download for Windows (ZIP)](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/Technobabble-1.13.1.zip)**
+- **[Download for Linux (portable x86-64 binary, .tar.gz)](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/technobabble-1.13.1-linux-x64.tar.gz)** · [Portable checksum](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/technobabble-1.13.1-linux-x64.tar.gz.sha256)
+- [Download the Linux source archive (.tar.gz)](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/Technobabble-Linux-1.13.1-source.tar.gz)
+- [SHA-256 checksums for all v1.13.1 downloads](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/v1.13.1-SHA256SUMS)
 
 Windows includes a desktop app and a terminal app. The native x86-64 Linux app runs on Debian, Ubuntu (including WSL 2), and compatible glibc distributions. [Watch 27 seconds of Relay Watch](docs/images/relay-watch-demo.gif) or [see the screenshot](#classic-and-studio-modes).
 
@@ -18,10 +20,10 @@ Windows includes a desktop app and a terminal app. The native x86-64 Linux app r
 
 ### Debian and Ubuntu (.deb)
 
-On 64-bit Intel/AMD Debian or Ubuntu, including Ubuntu under WSL, [download the .deb](https://github.com/lordtempis/technobabble/releases/download/v1.13/technobabble_1.13.0-2_amd64.deb). Open a terminal in the folder where you saved it and run:
+On 64-bit Intel/AMD Debian or Ubuntu, including Ubuntu under WSL, [download the .deb](https://github.com/lordtempis/technobabble/releases/download/v1.13.1/technobabble_1.13.1-2_amd64.deb). Open a terminal in the folder where you saved it and run:
 
 ```sh
-sudo apt install ./technobabble_1.13.0-2_amd64.deb
+sudo apt install ./technobabble_1.13.1-2_amd64.deb
 ```
 
 The package includes .NET. Run `technobabble` for Classic or `technobabble --layout "Relay Watch"` for Studio. Press **Q** to quit. To uninstall, run `sudo apt remove technobabble`.
@@ -59,9 +61,9 @@ Both executables use Windows performance counters. They were tested on Windows 1
 Use the portable archive on Intel/AMD 64-bit Linux with glibc 2.27 or later, ICU, and OpenSSL. It bundles .NET and runs directly from your user directory. Download the portable binary and its checksum above, then run these commands in the download directory.
 
 ```sh
-sha256sum -c technobabble-1.13.0-linux-x64.tar.gz.sha256
-tar -xzf technobabble-1.13.0-linux-x64.tar.gz
-cd technobabble-1.13.0-linux-x64
+sha256sum -c technobabble-1.13.1-linux-x64.tar.gz.sha256
+tar -xzf technobabble-1.13.1-linux-x64.tar.gz
+cd technobabble-1.13.1-linux-x64
 ./technobabble --layout "Relay Watch"
 ```
 
@@ -89,6 +91,6 @@ Some panes show real system activity. Others tell a fictional story. In **Relay 
 
 ## Source and releases
 
-The [Windows guide](windows/README.txt) and [Linux guide](linux/README.md) cover platform-specific commands, data sources, and layout locations. Both editions read the same layout file formats. The [contributor guide](CONTRIBUTING.md) shows how to build, test, and package each from a checkout. The [v1.13 release notes](docs/releases/v1.13.md) list the downloadable artifacts and their checksums.
+The [Windows guide](windows/README.txt) and [Linux guide](linux/README.md) cover platform-specific commands, data sources, and layout locations. Both editions read the same layout file formats. The [contributor guide](CONTRIBUTING.md) shows how to build, test, and package each from a checkout. The [v1.13.1 release notes](docs/releases/v1.13.1.md) list the downloadable artifacts and their checksums.
 
 Technobabble is an independent recreation of [Dustin Kirkland’s Hollywood](https://github.com/dustinkirkland/hollywood). The application source is licensed under [Apache 2.0](LICENSE). The [notices](NOTICE) credit the upstream map, soundwave animation, and FIGlet font.

@@ -135,3 +135,4 @@ jobs:
             docker run --rm --volume "$PWD:/src:ro" "$image" sh /src/tests/apt-install.sh public
           done
           docker run --rm --volume "$PWD:/src:ro" ubuntu:26.04 sh /src/tests/apt-install.sh upgrade
+          docker run --rm --volume "$PWD:/src:ro" debian:13-slim sh /src/tests/apt-install.sh upgrade-bundled
