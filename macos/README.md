@@ -12,6 +12,8 @@ Use macOS 15 or later. Choose the `osx-arm64` installer for an Apple Silicon Mac
 
 Press **S** to switch modes, **E** to edit a Studio pane, **W** to save, **?** for controls, and **Q** to quit. Layouts are stored in `~/Library/Application Support/Technobabble/layouts`. The `TECHNOBABBLE_LAYOUT_DIR` override also works.
 
+Run `man technobabble` for the command reference, or `man technobabble-terminal` for the same page under the alternate command name.
+
 ## Build on a Mac
 
 Install the .NET 10 SDK, Python 3, and Apple's Command Line Tools. From the full source checkout, run `python3 macos/package.py`. The installer and checksum appear under `macos/dist/`. The project uses the shared sources and notices in `linux/`; the macOS sensors use Mach and IOKit. The installer receipt is `io.github.lordtempis.technobabble.cli`.

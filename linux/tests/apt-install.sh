@@ -14,6 +14,8 @@ case "$mode" in
     local)
         # Minimal container images may tell dpkg to discard optional documentation.
         dpkg-deb --fsys-tarfile "$package" | tar -tf - > /tmp/technobabble-package-files
+        grep -Fx './usr/share/man/man1/technobabble.1.gz' /tmp/technobabble-package-files
+        grep -Fx './usr/share/man/man1/technobabble-terminal.1.gz' /tmp/technobabble-package-files
         grep -Fx './usr/share/doc/technobabble/dotnet-notices/LICENSE.TXT' /tmp/technobabble-package-files
         grep -Fx './usr/share/doc/technobabble/dotnet-notices/THIRD-PARTY-NOTICES.TXT' /tmp/technobabble-package-files
         apt install -y --no-install-recommends "$package"

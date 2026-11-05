@@ -44,6 +44,11 @@ jobs:
           cmp ../../linux/NOTICE.txt "$doc/NOTICE.txt"
           test -s "$doc/dotnet-notices/THIRD-PARTY-NOTICES.TXT"
           test -s "$doc/dotnet-notices/LICENSE.TXT"
+          for name in technobabble technobabble-terminal; do
+            cmp "../../linux/man/technobabble.1" "/usr/local/share/man/man1/$name.1"
+            MANPAGER=cat man 1 "$name" | col -bx > "$RUNNER_TEMP/$name.manual"
+            grep -Fq TECHNOBABBLE_LAYOUT_DIR "$RUNNER_TEMP/$name.manual"
+          done
       - name: Test the installed app in a real terminal
         run: |
           python3 -m venv "$RUNNER_TEMP/pty"

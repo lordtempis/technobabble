@@ -1,0 +1,134 @@
+.TH TECHNOBABBLE 1 "2026-11-05" "Technobabble" "User Commands"
+.SH NAME
+technobabble, technobabble-terminal \- display animated terminal dashboards
+.SH SYNOPSIS
+.B technobabble
+.RB [ \-s " panes" ]
+.RB [ \-d " seconds" ]
+.RB [ \-\-classic " | " \-\-studio ]
+.RB [ \-\-layout " name" ]
+.RB [ \-\-refresh " seconds" ]
+.br
+.B technobabble
+.RB [ \-\-help " | " \-\-version ]
+.SH DESCRIPTION
+Run
+.B technobabble
+in an interactive terminal to start Classic Mode.
+Classic builds a random arrangement of animated panes and periodically reshuffles it.
+Studio Mode lets you select, resize, pin, and save panes.
+Some panes show live system activity.
+Others, such as the three instruments in Relay Watch, simulate a fictional incident.
+.B technobabble-terminal
+starts the same application.
+.SH OPTIONS
+.TP
+.BI \-s " panes" "\fR, \fB\-\-splits " panes
+Set the target pane count from 1 to 20.
+The default is twice the processor count, up to 20.
+A small terminal may fit fewer panes.
+.TP
+.BI \-d " seconds" "\fR, \fB\-\-delay " seconds
+Wait this long after the last split before reshuffling.
+The range is 1 to 86400 seconds; the default is 10.
+.TP
+.B \-\-classic
+Start in Classic Mode (the default).
+.TP
+.B \-\-studio
+Start in Studio Mode.
+.TP
+.BI \-\-layout " name"
+Start Studio with a built-in or saved layout.
+Quote names containing spaces.
+Built-in layouts include Relay Watch, System Watch, Process Watch,
+Disk Watch, GPU Watch, Network Watch, and Blank Canvas.
+.TP
+.BI \-\-refresh " seconds"
+Set the Studio monitor sampling interval to 1, 2, or 5 seconds.
+This option and
+.B \-\-layout
+each select Studio Mode and cannot be combined with
+.BR \-\-classic .
+.TP
+.BR \-h ", " \-\-help
+Print a short command reference and exit.
+.TP
+.B \-\-version
+Print the version and platform and exit.
+.SH KEYBOARD CONTROLS
+.TP
+.BR Q ", " Ctrl-C
+Quit. Use Q from the dashboard or Ctrl-C at any time.
+.TP
+.BR ? ", " F1
+Show or hide the on-screen controls.
+.TP
+.BR S ", " F2
+Switch between Classic and Studio.
+.TP
+.BR Space ", " R
+Space pauses or resumes the animation. R reshuffles the panes.
+.TP
+.BR Tab ", " Shift-Tab
+In Studio, select the next or previous pane.
+.TP
+.BR E ", " P ", " B
+In Studio, E opens the pane editor, P toggles pinning, and B adjusts dividers.
+.TP
+.BR W ", " L
+In Studio, W saves a layout and L opens one.
+.TP
+.B Y
+In Studio, cycle the selected code pane through scrolling and typing speeds.
+.SH EXAMPLES
+Start Classic with a target of eight panes and a 15-second reshuffle delay:
+.PP
+.nf
+    technobabble \-s 8 \-d 15
+.fi
+.PP
+Follow a simulated incident or watch real system activity:
+.PP
+.nf
+    technobabble \-\-layout "Relay Watch"
+    technobabble \-\-layout "System Watch" \-\-refresh 1
+.fi
+.PP
+Build a dashboard from one pane:
+.PP
+.nf
+    technobabble \-\-layout "Blank Canvas"
+.fi
+.PP
+Press E to edit or split the pane, then W to save the layout.
+.SH FILES
+On Linux, saved layouts are
+.I *.layout
+files under
+.IR $XDG_DATA_HOME/technobabble/layouts .
+The default is
+.IR ~/.local/share/technobabble/layouts .
+The macOS preview uses
+.IR "~/Library/Application Support/Technobabble/layouts" .
+.SH ENVIRONMENT
+.TP
+.B TECHNOBABBLE_LAYOUT_DIR
+Use this directory for saved layouts in place of the platform default.
+.TP
+.B XDG_DATA_HOME
+On Linux, use this absolute directory as the base for application data.
+.SH EXIT STATUS
+.TP
+.B 0
+Normal exit.
+.TP
+.B 1
+Input or output error.
+.TP
+.B 2
+Invalid arguments, a layout that could not be opened, or an unsuitable terminal or platform.
+.SH SEE ALSO
+Project, downloads, and platform guides:
+.UR https://github.com/lordtempis/technobabble
+.UE .

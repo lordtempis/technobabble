@@ -28,6 +28,9 @@ Launch `./technobabble` for Classic Mode. Keep the extracted directory together.
 
 ### Terminal controls
 
+Packages built from this source include a command manual.
+With the Debian package, run `man technobabble`. From the extracted portable folder, run `man -M ./share/man technobabble`.
+
 With the Debian package installed, `technobabble` and `technobabble-terminal` launch the same Linux app. If you set a Bash alias for the old Windows bridge, update it to point to `/usr/bin/technobabble`.
 
 Launch `technobabble` with no options for Classic. Use `--studio` for Studio or `--layout "System Watch"` for a dashboard. **S** switches modes, **Space** pauses, **?** shows controls, and **Q** exits and restores the terminal. In Studio, **E** edits panes, **Tab** selects, **P** pins, **B** sizes dividers, **Y** cycles code typing speed, **W** saves, and **L** opens a layout.

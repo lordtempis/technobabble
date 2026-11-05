@@ -13,6 +13,7 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parent
 LINUX = ROOT.parent / "linux"
 sys.path.insert(0, str(LINUX))
+from manpage import install_manual
 from runtime_notices import copy_runtime_notices
 
 
@@ -41,6 +42,7 @@ def build(out):
                         f"-p:BaseIntermediateOutputPath={obj}/", f"-p:BaseOutputPath={work}/bin/", "-o", app], check=True)
         for command in ("technobabble", "technobabble-terminal"):
             (commands / command).symlink_to("../lib/technobabble/technobabble")
+        install_manual(stage / "usr/local/share/man/man1")
         for file in ("LICENSE.txt", "NOTICE.txt"):
             shutil.copyfile(LINUX / file, doc / file)
         shutil.copyfile(LINUX / "source/assets/standard.flf", doc / "standard.flf")
