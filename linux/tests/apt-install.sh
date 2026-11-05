@@ -10,6 +10,10 @@ case "$mode" in
     local)
         set -- /src/dist/apt/technobabble_*_amd64.deb
         test "$#" -eq 1
+        # Minimal container images may tell dpkg to discard optional documentation.
+        dpkg-deb --fsys-tarfile "$1" | tar -tf - > /tmp/technobabble-package-files
+        grep -Fx './usr/share/doc/technobabble/dotnet-notices/LICENSE.TXT' /tmp/technobabble-package-files
+        grep -Fx './usr/share/doc/technobabble/dotnet-notices/THIRD-PARTY-NOTICES.TXT' /tmp/technobabble-package-files
         apt install -y --no-install-recommends "$1"
         ;;
     public|upgrade)
@@ -38,7 +42,6 @@ if [ "$mode" != upgrade ] && command -v dotnet; then echo "Unexpected system .NE
 dpkg-query -S /usr/bin/technobabble /usr/bin/technobabble-terminal
 technobabble --version
 technobabble-terminal --version
-test -s /usr/share/doc/technobabble/dotnet-notices/LICENSE.TXT
 python3 /src/tests/terminal.py /usr/bin/technobabble
 apt remove -y technobabble
 test ! -e /usr/bin/technobabble && test ! -e /usr/lib/technobabble/libcoreclr.so
