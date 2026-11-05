@@ -24,7 +24,9 @@ def build(out):
     rid = "osx-arm64" if arch == "arm64" else "osx-x64"
     project = ROOT / "Technobabble.csproj"
     version = ET.parse(project).findtext(".//Version")
-    name = f"Technobabble-{version}-{rid}-preview.pkg"
+    preview_revision = 2
+    receipt_version = f"{version}.{preview_revision}"
+    name = f"Technobabble-{version}-{rid}-preview{preview_revision}.pkg"
     identifier = "io.github.lordtempis.technobabble.cli"
     out.mkdir(parents=True, exist_ok=True)
 
@@ -49,7 +51,7 @@ def build(out):
         shutil.copyfile(ROOT / "README.md", doc / "README.md")
         copy_runtime_notices(app, obj, doc / "dotnet-notices", rid)
         subprocess.run([app / "technobabble", "--version"], check=True)
-        subprocess.run(["pkgbuild", "--root", stage, "--identifier", identifier, "--version", version,
+        subprocess.run(["pkgbuild", "--root", stage, "--identifier", identifier, "--version", receipt_version,
                         "--install-location", "/", "--ownership", "recommended", work/"cli.pkg"], check=True)
         distribution = work / "Distribution.xml"
         distribution.write_text(f'''<installer-gui-script minSpecVersion="2">
@@ -58,7 +60,7 @@ def build(out):
 <volume-check><allowed-os-versions><os-version min="15.0"/></allowed-os-versions></volume-check>
 <choices-outline><line choice="cli"/></choices-outline>
 <choice id="cli" visible="false"><pkg-ref id="{identifier}"/></choice>
-<pkg-ref id="{identifier}" version="{version}">cli.pkg</pkg-ref>
+<pkg-ref id="{identifier}" version="{receipt_version}">cli.pkg</pkg-ref>
 </installer-gui-script>''')
         package = Path(output_tmp) / name
         subprocess.run(["productbuild", "--distribution", distribution, "--package-path", work, package], check=True)
