@@ -89,13 +89,6 @@ jobs:
           python3 -m venv "$RUNNER_TEMP/pty"
           "$RUNNER_TEMP/pty/bin/pip" install pyte==0.8.2
           "$RUNNER_TEMP/pty/bin/python" macos/tests/installed.py
-      - name: Save diagnostic logs on failure
-        if: failure()
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: macos-tahoe-26-${{ matrix.arch }}-diagnostics
-          path: ${{ runner.temp }}/mac-ci/*.log
-          if-no-files-found: warn
       - name: Save verified preview installer
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
@@ -105,3 +98,22 @@ jobs:
             macos/dist/*.pkg.sha256
           compression-level: 0
           if-no-files-found: error
+      - name: Check ARM64 cross-build on Intel (build only)
+        if: matrix.arch == 'x86_64'
+        run: |
+          exec > >(tee "$RUNNER_TEMP/mac-ci/arm64-cross-build.log") 2>&1
+          out="$RUNNER_TEMP/arm64-publish"
+          dotnet publish macos/Technobabble.csproj -c Release -r osx-arm64 --self-contained true \
+            --source https://api.nuget.org/v3/index.json -o "$out"
+          for binary in technobabble libtechnobabble-sensors.dylib libcoreclr.dylib; do
+            arch=$(lipo -archs "$out/$binary")
+            echo "$binary: $arch"
+            test "$arch" = arm64
+          done
+      - name: Save diagnostic logs on failure
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: macos-tahoe-26-${{ matrix.arch }}-diagnostics
+          path: ${{ runner.temp }}/mac-ci/*.log
+          if-no-files-found: warn

@@ -19,3 +19,7 @@ Run `man technobabble` for the command reference, or `man technobabble-terminal`
 Install the .NET 10 SDK, Python 3, and Apple's Command Line Tools. From the full source checkout, run `python3 macos/package.py`. The installer and checksum appear under `macos/dist/`. The project uses the shared sources and notices in `linux/`; the macOS sensors use Mach and IOKit. The installer receipt is `io.github.lordtempis.technobabble.cli`.
 
 The installer includes the application and asset notices, the FIGlet font and distribution terms, and the bundled runtime's original licenses under `/usr/local/share/doc/technobabble/`.
+
+## Reading the Tahoe test results
+
+Each architecture has its own native build, install, and terminal tests. If GitHub cannot allocate an Apple silicon runner, that native result is pending or cancelled. The Intel job also cross-builds the ARM64 executable, sensor library, and runtime and checks their architecture. Running the Apple silicon installer still requires the native ARM64 job.
